@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+
+  <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script>
+    const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+    document.write(`<link rel="import" href="../../theme/${theme}/vcf-date-range-picker.html">`);
+
+    window.addEventListener('WebComponentsReady', function() {
+      customElements.whenDefined('vcf-date-range-picker').then(() => {
+        window.ShadyDOM && window.ShadyDOM.flush(); // Force DOM composition
+        window.webComponentsAreReady = true; // Checked in gemini before capture callback
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <div id="default-tests" style="padding: 10px;">
+    Plain
+    <vcf-date-range-picker></vcf-date-range-picker>
+
+    <br>Label
+    <vcf-date-range-picker label="Pick a date"></vcf-date-range-picker>
+
+    <br>Placeholder
+    <vcf-date-range-picker placeholder="Pick a date"></vcf-date-range-picker>
+
+    <br>Disabled
+    <vcf-date-range-picker disabled></vcf-date-range-picker>
+
+    <br>Read-only
+    <vcf-date-range-picker readonly></vcf-date-range-picker>
+
+    <br>Value
+    <vcf-date-range-picker value="1991-12-20"></vcf-date-range-picker>
+
+    <br>Clear button visible
+    <vcf-date-range-picker clear-button-visible></vcf-date-range-picker>
+    <vcf-date-range-picker clear-button-visible value="1991-12-20"></vcf-date-range-picker>
+
+    <br>Helper text
+    <vcf-date-range-picker label="Foo" value="1991-12-20" helper-text="Bar"></vcf-date-range-picker>
+
+    <br>Slotted helper
+    <vcf-date-range-picker>
+      <span slot="helper">Bar</span>
+    </vcf-date-range-picker>
+  </div>
+
+</body>

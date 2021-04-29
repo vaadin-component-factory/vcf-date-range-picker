@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
+    <title>vcf-date-range-picker demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+    <script type="module" src="date-range-picker-demo.js"></script>
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+        .centered {
+          max-width: 1000px;
+        }
+        main {
+          opacity: 1;
+          transition: opacity 1s;
+        }
+        main.hidden {
+          opacity: 0;
+        }
+      </style>
+    </custom-style>
+    <script>
+      window.addEventListener('WebComponentsReady', () => document.querySelector('main').classList.remove('hidden'));
+    </script>
+  </head>
+  <body>
+    <main class="vertical-section-container centered hidden">
+      <h3>Basic usage</h3>
+      <demo-snippet>
+        <template preserve-content>
+          <vcf-date-range-picker label="From" end-label="To"></vcf-date-range-picker>
+          <vcf-date-range-picker placeholder="Enter start date" end-placeholder="Enter end date"></vcf-date-range-picker>
+          <vcf-date-range-picker value="1990-01-28" end-value="1990-01-30"></vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+  
+      <h3>Disabled and read-only</h3>
+      <demo-snippet>
+        <template preserve-content>
+          <vcf-date-range-picker disabled label="Disabled" value="1990-01-28"></vcf-date-range-picker>
+          <vcf-date-range-picker readonly label="Read-only" value="1990-01-28"></vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+  
+      <h3>Clear button</h3>
+      <demo-snippet>
+        <template preserve-content>
+          <vcf-date-range-picker clear-button-visible label="Label" value="1990-01-28"></vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+  
+      <h3>Helper text</h3>
+      <p>Use the <code>helper-text</code> attribute or add content to the <code>helper</code> slot to set helper content.</p>
+      <demo-snippet id="helper-text">
+        <template preserve-content>
+          <vcf-date-range-picker label="Event date">
+            <span slot="helper">International date format</span>
+          </vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+  
+      <h3>Value change event</h3>
+      <demo-snippet id="value-change-event" when-defined="vcf-date-range-picker">
+        <template preserve-content>
+          <vcf-date-range-picker label="Label"></vcf-date-range-picker>
+          <div>Selected value: <span id="output"></span></div>
+          <script>
+            // window.addDemoReadyListener('#value-change-event', function(document) {
+            //   const datePicker = document.querySelector('vcf-date-range-picker');
+            //   const output = document.querySelector('#output');
+            //   datePicker.addEventListener('change', function(event) {
+            //     output.textContent = event.target.value;
+            //   });
+            // });
+          </script>
+        </template>
+      </demo-snippet>
+  
+      <h3>Auto open disabled</h3>
+      <p>Dropdown is only opened when clicking the toggle button or pressing Up or Down arrow keys.</p>
+      <demo-snippet id="auto-open-disabled" when-defined="vcf-date-range-picker">
+        <template preserve-content>
+          <vcf-date-range-picker label="Label" auto-open-disabled></vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+        
+    </main>
+  </body>
+</html>

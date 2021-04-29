@@ -1,0 +1,12 @@
+<dom-module id="not-animated-date-range-picker-overlay" theme-for="vcf-date-range-picker-overlay">
+  <template>
+    <style include="lumo-date-range-picker-overlay">
+      :host([opening]),
+      :host([closing]),
+      :host([opening]) [part="overlay"],
+      :host([closing]) [part="overlay"] {
+        animation: none !important;
+      }
+    </style>
+  </template>
+</dom-module>
