@@ -526,7 +526,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
   _onThisWeekTap() {
     var lastSunday = this._getLastSunday(new Date());
     this.selectedStartDate = lastSunday;
-    var nextSunday = new Date();
+    var nextSunday = new Date(lastSunday);
     nextSunday.setDate(lastSunday.getDate() + 6);
     this.selectedEndDate = nextSunday;
     this._close();
@@ -536,7 +536,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     var lastSunday = this._getLastSunday(new Date());
     lastSunday.setDate(lastSunday.getDate() - 7);
     this.selectedStartDate = lastSunday;
-    var nextSunday = new Date();
+    var nextSunday = new Date(lastSunday);
     nextSunday.setDate(lastSunday.getDate() + 6);
     this.selectedEndDate = nextSunday;
     this._close();
