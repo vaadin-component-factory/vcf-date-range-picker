@@ -818,6 +818,10 @@ export const DateRangePickerMixin = (subclass) =>
     if (this._noInput && this.focusElement) {
       this.focusElement.blur();
     }
+    
+    var slot = this.shadowRoot.querySelector("slot[name='presets']");
+		var nodes = slot.assignedNodes();
+    this._overlayContent.addToolbarContent(nodes);
 
     this.updateStyles();
 

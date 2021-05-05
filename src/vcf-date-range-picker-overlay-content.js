@@ -174,7 +174,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         [[_yearAfterXMonths(_visibleMonthIndex)]]
       </div>
     </div>
-    <div on-touchend="_preventDefault" role="toolbar" part="toolbar">
+    <div on-touchend="_preventDefault" role="toolbar" part="toolbar" id="toolbarDiv">
       <vaadin-button id="todayButton" theme="tertiary" part="today-button" disabled="[[!_isTodayAllowed(minDate, maxDate)]]" on-tap="_onTodayTap">
         [[i18n.today]]
       </vaadin-button>
@@ -439,6 +439,13 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
 
   removePreselectionById(id) {
     this.shadowRoot.getElementById(id).remove();
+  }
+
+  addToolbarContent(nodes) {
+    var shadow = this.shadowRoot;
+    nodes.forEach(function (item,index) {
+      shadow.getElementById("toolbarDiv").appendChild(item);
+    })
   }
 
   _onOverlayFocus() {
