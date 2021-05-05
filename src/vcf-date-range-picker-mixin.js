@@ -988,6 +988,16 @@ export const DateRangePickerMixin = (subclass) =>
     return endInputValid && endMinMaxValid && endInputValidity;
   }
 
+  removePreselectionById(id) {
+    var handler = e => {
+      if (e.detail.value) {
+        this._overlayContent.removePreselectionById(id);
+      }
+      this.$.overlay.removeEventListener('opened-changed',handler);
+    }
+    this.$.overlay.addEventListener('opened-changed', handler);
+  }
+
   /** @private */
   _onScroll(e) {
     if (e.target === window || !this._overlayContent.contains(e.target)) {

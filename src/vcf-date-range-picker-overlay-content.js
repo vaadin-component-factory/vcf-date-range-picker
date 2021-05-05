@@ -437,6 +437,10 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     }
   }
 
+  removePreselectionById(id) {
+    this.shadowRoot.getElementById(id).remove();
+  }
+
   _onOverlayFocus() {
     this._focused = true;
   }
