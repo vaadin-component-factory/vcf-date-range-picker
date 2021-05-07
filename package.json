@@ -1,12 +1,16 @@
 {
-  "name": "@vaadin/vcf-date-range-picker",
+  "name": "@vaadin-component-factory/vcf-date-range-picker",
   "version": "4.5.0",
   "description": "Polymer element providing a date range selection field with scrollable month calendar",
   "main": "vcf-date-range-picker.js",
-  "repository": "vaadin/vcf-date-range-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaadin-component-factory/vcf-date-range-picker.git"
+  },
   "keywords": [
     "Vaadin",
-    "date-range-picker",
+    "vaadin-component-factory",
+    "vcf-date-range-picker",
     "web-components",
     "web-component",
     "polymer"
@@ -14,9 +18,9 @@
   "author": "Vaadin Ltd",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/vaadin/vcf-date-range-picker/issues"
+    "url": "https://github.com/vaadin-component-factory/vcf-date-range-picker/issues"
   },
-  "homepage": "https://vaadin.com/components",
+  "homepage": "https://github.com/vaadin-component-factory/vcf-date-range-picker#readme",
   "files": [
     "vaadin-*.d.ts",
     "vaadin-*.js",
