@@ -1170,17 +1170,21 @@ export const DateRangePickerMixin = (subclass) =>
         }
         break;
       case 'tab':
-        if (this.opened) {
-          e.preventDefault();
-          // Clear the selection range (remains visible on IE)
-          this._setSelectionRange(0, 0);
+        if (document.activeElement === this && this.shadowRoot.activeElement === this._inputStartElement)
+        {
           if (e.shiftKey) {
-            this._overlayContent.focusCancel();
+            this.close();
           } else {
-            this._overlayContent.focus();
-            this._overlayContent.revealDate(this._focusedDate);
+            e.preventDefault();
+            this._inputEndElement.focus();
           }
-
+        } else if (document.activeElement === this && this.shadowRoot.activeElement === this._inputEndElement) {
+          if (e.shiftKey) {
+            e.preventDefault();
+            this._inputStartElement.focus();
+          } else {
+            this.close();
+          }
         }
         break;
     }
