@@ -208,5 +208,5 @@ registerStyles(
         }
       }
     `,
-  { moduleId: 'lumo-date-range-picker-overlay-content' }
+  { moduleId: 'lumo-vcf-date-range-picker-overlay-content' }
 );

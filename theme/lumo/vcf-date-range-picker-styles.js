@@ -23,5 +23,5 @@ registerStyles(
         }
       }
       `,
-  { include: ['lumo-field-button'], moduleId: 'lumo-date-range-picker' }
+  { include: ['lumo-field-button'], moduleId: 'lumo-vcf-date-range-picker' }
 );
