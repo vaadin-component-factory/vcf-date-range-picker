@@ -1,6 +1,6 @@
 {
   "name": "@vaadin-component-factory/vcf-date-range-picker",
-  "version": "4.6.5",
+  "version": "4.6.6",
   "description": "Polymer element providing a date range selection field with scrollable month calendar",
   "main": "vcf-date-range-picker.js",
   "repository": {
