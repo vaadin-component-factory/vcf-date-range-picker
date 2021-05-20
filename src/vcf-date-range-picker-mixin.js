@@ -1027,6 +1027,13 @@ export const DateRangePickerMixin = (subclass) =>
     }
   }
 
+  /** @protected */
+  _clearStartTextField(e) {
+    if (e.detail.sourceEvent.__fromClearButton) {
+      this._inputStartElement.clear();
+    }
+  }
+
   /** @private */
   _focusAndSelect() {
     this._focus();
