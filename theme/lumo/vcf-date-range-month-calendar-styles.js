@@ -126,7 +126,7 @@ registerStyles(
 
       [part="date"][start]::before {
         background-color: var(--lumo-primary-color);
-        border-radius: var(--lumo-border-radius);
+        border-radius: var(--lumo-border-radius) 0px 0px var(--lumo-border-radius);
         padding-left: 0px;
         padding-right: 0px;
       }
@@ -137,7 +137,7 @@ registerStyles(
 
       [part="date"][end]::before {
         background-color: var(--lumo-primary-color);
-        border-radius: var(--lumo-border-radius);
+        border-radius: 0px var(--lumo-border-radius) var(--lumo-border-radius) 0px;
         padding-left: 0px;
         padding-right: 0px;
       }
