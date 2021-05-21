@@ -91,11 +91,6 @@ export const DateRangePickerMixin = (subclass) =>
       label: String,
 
       /**
-       * The label for this element.
-       */
-      endLabel: String,
-
-      /**
        * Set true to open the date selector overlay.
        */
       opened: {

@@ -152,15 +152,13 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         on-change="_clearStartTextField"
         value="{{_userInputEndValue}}"
         invalid="[[invalid]]"
-        label="[[endLabel]]"
+        label="&nbsp;"
         name="[[name]]"
         placeholder="[[endPlaceholder]]"
         required="[[required]]"
         disabled="[[disabled]]"
         readonly="[[readonly]]"
-        error-message="[[endErrorMessage]]"
         clear-button-visible$="[[clearButtonVisible]]"
-        aria-label$="[[endLabel]]"
         part="end-text-field"
         helper-end-text="[[helperEndText]]"
         theme$="[[theme]]"
@@ -243,12 +241,6 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
        * @attr {string} error-message
        */
       errorMessage: String,
-
-      /**
-       * The error message to display when the end input is invalid.
-       * @attr {string} error-message
-       */
-      endErrorMessage: String,
 
       /**
        * A placeholder string in addition to the label. If this is set, the label will always float.

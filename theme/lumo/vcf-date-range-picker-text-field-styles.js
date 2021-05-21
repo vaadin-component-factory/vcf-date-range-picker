@@ -14,6 +14,15 @@ registerStyles(
       :host([dir="rtl"]) [part="input-field"] ::slotted(input) {
         --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em);
       }
+
+      [part="label"] {
+        max-width: 200%;  
+      }
+
+      [part="error-message"] {
+        max-width: 200%;
+        width: 200%;
+      }
       `,
   { moduleId: 'lumo-vcf-date-range-picker-text-field' }
 );
