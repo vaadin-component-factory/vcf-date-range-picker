@@ -579,6 +579,7 @@ export const DateRangePickerMixin = (subclass) =>
 
   /** @private */
   _openedChanged(opened) {
+    this._selectingStartDate = true;
     if (opened && !this._overlayInitialized) {
       this._initOverlay();
     }
@@ -602,16 +603,15 @@ export const DateRangePickerMixin = (subclass) =>
 
     this.__keepInputValue || this._applyStartInputValue(selectedDate);
 
-    var startDate = this._extractStartDate(this.value);
-    if (value !== startDate) {
-      this.validateStart();
-      this.value = value + ";" + this._extractEndDate(this.value);
-    }
     this.__userInputOccurred = false;
     this.__dispatchChange = false;
     this._ignoreFocusedDateChange = true;
     this._focusedDate = selectedDate;
     this._ignoreFocusedDateChange = false;
+
+    this._inputEndValue='';
+    this._selectedEndDate = undefined;
+    this._userInputEndValue = null;
   }
 
   /** @private */
@@ -852,7 +852,9 @@ export const DateRangePickerMixin = (subclass) =>
       const parsedDate = this._getParsedDate(inputValue);
 
       if (this._isValidDate(parsedDate)) {
-        this._selectedStartDate = parsedDate;
+        if (this._selectedStartDate<parsedDate || this._selectedStartDate>parsedDate) {
+            this._selectedStartDate = parsedDate;
+        }
       } else {
         this.__keepInputValue = true;
         this._selectedStartDate = null;
