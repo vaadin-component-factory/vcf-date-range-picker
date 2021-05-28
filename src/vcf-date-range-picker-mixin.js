@@ -476,12 +476,16 @@ export const DateRangePickerMixin = (subclass) =>
     if (this._selectingStartDate) {
       this._selectingStartDate = false;
     } else {
-      this._selectingStartDate = true;
-      if (e) {
-      e.stopPropagation();
+      e && e.stopPropagation();
+      if (this._selectedStartDate && this._selectedStartDate<=this._selectedEndDate) {
+        this._selectingStartDate = true;
+        this._focus();
+        this.close();
+      } else {
+        this._selectingStartDate = false;
+        this._selectedStartDate = this._selectedEndDate;
+        this._selectedEndDate = undefined;
       }
-      this._focus();
-      this.close();
     }
   }
 
