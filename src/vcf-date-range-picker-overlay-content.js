@@ -782,19 +782,19 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     this.selectedEndDate = '';
   }
 
-  _close() {
+  _close(cancel) {
     const overlayContent = this.getRootNode().host;
     const overlay = overlayContent ? overlayContent.getRootNode().host : null;
     if (overlay) {
       overlay.opened = false;
     }
 
-    this.dispatchEvent(new CustomEvent('close', {bubbles: true, composed: true}));
+    this.dispatchEvent(new CustomEvent('close', {bubbles: true, composed: true, detail: {cancel : !!cancel} }));
   }
 
   _cancel() {
     this.focusedDate = this.selectedStartDate;
-    this._close();
+    this._close(true);
   }
 
   _preventDefault(e) {

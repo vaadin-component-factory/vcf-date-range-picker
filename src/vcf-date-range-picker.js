@@ -339,7 +339,11 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     if (e.detail.sourceEvent && e.detail.sourceEvent.composedPath().indexOf(this) !== -1) {
       e.preventDefault();
     }
-    if (this._userInputStartValue && this._userInputEndValue) {
+    if (this._cancelled) {
+      this._cancelled = false;
+      this._selectedStartDate = this._getParsedDate(this._extractStartDate(this.value));
+      this._selectedEndDate = this._getParsedDate(this._extractEndDate(this.value));
+    } else if (this._userInputStartValue && this._userInputEndValue) {
       this.value = this._userInputStartValue+";"+this._userInputEndValue;
     }
   }
