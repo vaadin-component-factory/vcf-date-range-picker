@@ -928,7 +928,7 @@ export const DateRangePickerMixin = (subclass) =>
     // Note (Yuriy): Workaround `this._inputValue` is used in order
     // to avoid breaking change on custom `checkValidity`.
     // Can be removed with next major.
-    return !(this.invalid = !this.checkStartValidity(this._inputValue));
+    return !(this.invalid = !this.checkStartValidity(this._inputStartValue));
   }
 
   /**
@@ -941,7 +941,7 @@ export const DateRangePickerMixin = (subclass) =>
     // Note (Yuriy): Workaround `this._inputValue` is used in order
     // to avoid breaking change on custom `checkValidity`.
     // Can be removed with next major.
-    return !(this.invalid = !this.checkEndValidity(this._inputValue));
+    return !(this.invalid = !this.checkEndValidity(this._inputEndValue));
   }
 
   /**
