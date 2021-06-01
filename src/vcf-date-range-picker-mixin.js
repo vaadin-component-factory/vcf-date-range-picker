@@ -667,14 +667,13 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   /** @private */
-  _handleDateChange(property, value, oldValue) {
+  _handleDateChange(property, value, oldValue) {	
     if (!value) {
       this[property] = '';
       return;
     }
-
-    //var date = this._parseDate(value);
-    var date = this._getParsedDate(value);
+	
+    var date = this._parseDate(value);
     if (!date) {
       return false;
     }
@@ -699,13 +698,7 @@ export const DateRangePickerMixin = (subclass) =>
       endDate="";
     }    
 
-    value = startDate + ";" + endDate;
-    if (value == this.value) {
-        this._userInputStartValue=startDate;
-        this._userInputEndValue=endDate;
-    } else {
-        this.value = value;
-    }
+    this.value = startDate + ";" + endDate;
   }
 
   _extractStartDate(value) {

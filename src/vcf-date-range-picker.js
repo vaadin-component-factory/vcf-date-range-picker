@@ -339,12 +339,15 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     if (e.detail.sourceEvent && e.detail.sourceEvent.composedPath().indexOf(this) !== -1) {
       e.preventDefault();
     }
+
     if (this._cancelled) {
       this._cancelled = false;
-      this._selectedStartDate = this._getParsedDate(this._extractStartDate(this.value));
-      this._selectedEndDate = this._getParsedDate(this._extractEndDate(this.value));
-    } else if (this._userInputStartValue && this._userInputEndValue) {
-      this.value = this._userInputStartValue+";"+this._userInputEndValue;
+	  const startDate = this._parseDate(this._extractStartDate(this.value));
+      const endDate = this._parseDate(this._extractEndDate(this.value));
+      this._selectedStartDate = startDate;
+      this._selectedEndDate = endDate;
+    } else if (this._selectedStartDate && this._selectedEndDate) {
+      this.value = this._formatISO(this._selectedStartDate)+";"+this._formatISO(this._selectedEndDate);
     }
   }
 
