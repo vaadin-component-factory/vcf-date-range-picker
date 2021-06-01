@@ -630,11 +630,6 @@ export const DateRangePickerMixin = (subclass) =>
 
     this.__keepInputValue || this._applyEndInputValue(selectedDate);
 
-    var endDate = this._extractEndDate(this.value);
-    if (value !== endDate) {
-      this.validateEnd();
-      this.value = this._extractStartDate(this.value) + ";" + value;
-    }
     this.__userInputOccurred = false;
     this.__dispatchChange = false;
     this._ignoreFocusedDateChange = true;
@@ -677,7 +672,8 @@ export const DateRangePickerMixin = (subclass) =>
       return;
     }
 
-    var date = this._parseDate(value);
+    //var date = this._parseDate(value);
+    var date = this._getParsedDate(value);
     if (!date) {
       return false;
     }
@@ -701,7 +697,14 @@ export const DateRangePickerMixin = (subclass) =>
     if (endDate && !this._handleDateChange('_selectedEndDate', endDate, oldValue)) {
       endDate="";
     }    
-    value = startDate + ";" + (endDate==undefined?"":endDate);  
+
+    value = startDate + ";" + endDate;
+    if (value == this.value) {
+        this._userInputStartValue=startDate;
+        this._userInputEndValue=endDate;
+    } else {
+        this.value = value;
+    }
   }
 
   _extractStartDate(value) {

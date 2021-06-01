@@ -339,6 +339,9 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     if (e.detail.sourceEvent && e.detail.sourceEvent.composedPath().indexOf(this) !== -1) {
       e.preventDefault();
     }
+    if (this._userInputStartValue && this._userInputEndValue) {
+      this.value = this._userInputStartValue+";"+this._userInputEndValue;
+    }
   }
 
   /** @private */
