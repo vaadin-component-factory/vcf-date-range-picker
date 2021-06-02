@@ -113,11 +113,11 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       }
 
       [part="start-text-field"] {
-        width: 50%;
+        width: 11ch;
         min-width: 0;
       }
       [part="end-text-field"] {
-        width: 50%;
+        width: 16ch;
         min-width: 0;
       }
 
@@ -145,7 +145,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperText]]</slot>
-    </vcf-date-range-picker-text-field><vcf-date-range-picker-text-field id="endInput"
+    </vcf-date-range-picker-text-field><div part="dash"></div><vcf-date-range-picker-text-field id="endInput"
         role="application"
         autocomplete="off"
         on-focus="_focusEnd"
