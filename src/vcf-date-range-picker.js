@@ -142,6 +142,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         helper-text="[[helperText]]"
         theme$="[[theme]]"
         class="startDate"
+        autoselect="true"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperText]]</slot>
@@ -163,6 +164,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         helper-end-text="[[helperEndText]]"
         theme$="[[theme]]"
         class="endDate"
+        autoselect="true"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperEndText]]</slot>
