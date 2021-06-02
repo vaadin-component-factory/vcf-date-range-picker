@@ -1180,11 +1180,19 @@ export const DateRangePickerMixin = (subclass) =>
           if (e.shiftKey) {
             this.close();
           } else {
+            const startParsedDate = this._getParsedDate(this._inputStartValue);
+            if (this._isValidDate(startParsedDate)) {
+              this._selectedStartDate = startParsedDate;
+            }
             e.preventDefault();
             this._inputEndElement.focus();
           }
         } else if (document.activeElement === this && this.shadowRoot.activeElement === this._inputEndElement) {
           if (e.shiftKey) {
+            const endParsedDate = this._getParsedDate(this._inputEndValue);
+            if (this._isValidDate(endParsedDate)) {
+              this._selectedEndDate = endParsedDate;
+            }
             e.preventDefault();
             this._inputStartElement.focus();
           } else {
