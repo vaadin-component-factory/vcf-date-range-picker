@@ -613,10 +613,6 @@ export const DateRangePickerMixin = (subclass) =>
     this._ignoreFocusedDateChange = true;
     this._focusedDate = selectedDate;
     this._ignoreFocusedDateChange = false;
-
-    this._inputEndValue='';
-    this._selectedEndDate = undefined;
-    this._userInputEndValue = null;
   }
 
   /** @private */
