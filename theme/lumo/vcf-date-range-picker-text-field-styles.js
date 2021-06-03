@@ -16,12 +16,15 @@ registerStyles(
       }
 
       [part="label"] {
-        max-width: 200%;  
+        max-width: 32ch;  
       }
 
       [part="error-message"] {
-        max-width: 200%;
-        width: 200%;
+        width: 35ch;
+        max-width: 35ch;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       [part="value"] {
