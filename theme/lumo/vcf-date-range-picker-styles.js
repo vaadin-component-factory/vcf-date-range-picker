@@ -12,19 +12,18 @@ registerStyles(
       [part="dash"]::before {
         content: var(--lumo-icons-minus);
         font-family: "lumo-icons";
+        align-self: center;
+        margin-bottom: -1.5px;
       }
 
       [part="dash"] {
         display: inline-flex;
         background-color: var(--lumo-contrast-10pct);
-        padding-top: 11.5px;
-        padding-bottom: 10.5px;
+        height: var(--lumo-size-m);
       }
 
       :host([disabled]) [part="dash"] {
         background-color: var(--lumo-contrast-5pct);
-        padding-top: 11.5px;
-        padding-bottom: 10.5px;
       }
 
       :host([readonly]) [part="dash"] {
