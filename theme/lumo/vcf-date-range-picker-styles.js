@@ -13,7 +13,6 @@ registerStyles(
         content: var(--lumo-icons-minus);
         font-family: "lumo-icons";
         align-self: center;
-        margin-bottom: -1.5px;
       }
 
       [part="dash"] {
