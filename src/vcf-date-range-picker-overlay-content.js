@@ -884,11 +884,22 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
             this._onTodayTap();
           } else {
             var focusedDate = this.focusedDate;
-            if (dateEquals(focusedDate, this.selectedStartDate)) {
-              this.selectedStartDate = '';
-              this.focusedDate = focusedDate;
+            if (this.selectingStartDate) {
+              if (dateEquals(focusedDate, this.selectedStartDate)) {
+                this.selectedStartDate = '';
+                this.focusedDate = focusedDate;
+              } else {
+                this.selectedStartDate = focusedDate;
+                this.selectingStartDate = false;
+              }
             } else {
-              this.selectedStartDate = focusedDate;
+              if (dateEquals(focusedDate, this.selectedEndDate)) {
+                this.selectedEndDate = '';
+                this.focusedDate = focusedDate;
+              } else {
+                this.selectedEndDate = focusedDate;
+                this._close();
+              }
             }
           }
           break;
