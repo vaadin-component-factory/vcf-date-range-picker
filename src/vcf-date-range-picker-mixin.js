@@ -1177,6 +1177,7 @@ export const DateRangePickerMixin = (subclass) =>
         {
           if (e.shiftKey) {
             this.close();
+            this.blur();
           } else {
             const startParsedDate = this._getParsedDate(this._inputStartValue);
             if (this._isValidDate(startParsedDate)) {
@@ -1195,6 +1196,7 @@ export const DateRangePickerMixin = (subclass) =>
             this._inputStartElement.focus();
           } else {
             this.close();
+            this.blur();
           }
         }
         break;
