@@ -694,10 +694,16 @@ export const DateRangePickerMixin = (subclass) =>
     var endDate = this._extractEndDate(value);
     if (startDate && !this._handleDateChange('_selectedStartDate', startDate, oldValue)) {
       startDate="";
+      this._selectedStartDate = null;
+    } else {
+      this._selectedStartDate = this._parseDate(startDate);
     }
     if (endDate && !this._handleDateChange('_selectedEndDate', endDate, oldValue)) {
       endDate="";
-    }    
+      this._selectedEndDate = null;
+    } else {
+      this._selectedEndDate = this._parseDate(endDate);
+    }
 
     this.value = startDate + ";" + endDate;
   }
