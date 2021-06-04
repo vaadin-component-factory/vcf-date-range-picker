@@ -643,8 +643,11 @@ export const DateRangePickerMixin = (subclass) =>
     }
     this.__userInputOccurred = true;
     if (!this._ignoreFocusedDateChange && !this._noInput) {
-      // FIX: Just using start value, don't know what to do
-      this._applyStartInputValue(focusedDate);
+      if (this._selectingStartDate) {
+        this._applyStartInputValue(focusedDate);
+      } else {
+        this._applyEndInputValue(focusedDate);
+      }
     }
   }
 
