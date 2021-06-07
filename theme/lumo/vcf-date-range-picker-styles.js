@@ -9,6 +9,30 @@ registerStyles(
         outline: none;
       }
 
+      [part="dash"]::before {
+        content: var(--lumo-icons-minus);
+        font-family: "lumo-icons";
+        align-self: center;
+      }
+
+      [part="dash"] {
+        display: inline-flex;
+        background-color: var(--lumo-contrast-10pct);
+        height: var(--lumo-size-m);
+      }
+
+      :host([disabled]) [part="dash"] {
+        background-color: var(--lumo-contrast-5pct);
+      }
+
+      :host([readonly]) [part="dash"] {
+        background-color: var(--lumo-contrast-0pct);
+      }
+
+      :host([invalid]) [part="dash"] {
+        background-color: var(--lumo-error-color-10pct);
+      }
+
       [part="toggle-button"]::before {
         content: var(--lumo-icons-calendar);
       }

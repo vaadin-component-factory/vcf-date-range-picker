@@ -8,7 +8,7 @@
 [&lt;vcf-date-range-picker&gt;](https://vaadin.com/components/vcf-date-range-picker) is a Web Component providing a date range selection field which includes a scrollable month calendar view.
 
 ```html
-<vcf-date-range-picker label="From" end-label="To" value="1990-01-28" end-value="1990-01-30">
+<vcf-date-range-picker label="Enter date range" value="1990-01-28" end-value="1990-01-30">
 </vcf-date-range-picker>
 ```
 

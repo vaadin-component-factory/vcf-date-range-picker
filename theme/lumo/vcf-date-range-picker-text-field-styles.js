@@ -14,6 +14,35 @@ registerStyles(
       :host([dir="rtl"]) [part="input-field"] ::slotted(input) {
         --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em);
       }
+
+      [part="label"] {
+        max-width: 32ch;  
+      }
+
+      [part="error-message"] {
+        width: 35ch;
+        max-width: 35ch;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      [part="value"] {
+        --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 0.25em);
+      }
+
+      :host([id="startInput"]) [part="input-field"] {
+        padding-right:0px;
+      }
+      :host([id="startInput"]) [part="value"] {
+        padding-right:0px;
+      }
+      :host([id="endInput"]) [part="input-field"] {
+        padding-left:0px;
+      }
+      :host([id="endInput"]) [part="value"] {
+        padding-left:0px;
+      }
       `,
   { moduleId: 'lumo-vcf-date-range-picker-text-field' }
 );

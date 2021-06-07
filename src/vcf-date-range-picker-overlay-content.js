@@ -538,7 +538,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     var lastSunday = this._getLastSunday(new Date());
     this.selectedStartDate = lastSunday;
     var nextSunday = new Date(lastSunday);
-    nextSunday.setDate(lastSunday.getDate() + 6);
+    nextSunday.setDate(new Date(lastSunday.getDate() + 6));
     this.selectedEndDate = nextSunday;
     this._close();
   }
@@ -548,7 +548,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     lastSunday.setDate(lastSunday.getDate() - 7);
     this.selectedStartDate = lastSunday;
     var nextSunday = new Date(lastSunday);
-    nextSunday.setDate(lastSunday.getDate() + 6);
+    nextSunday.setDate(new Date(lastSunday.getDate() + 6));
     this.selectedEndDate = nextSunday;
     this._close();
   }
@@ -782,19 +782,19 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     this.selectedEndDate = '';
   }
 
-  _close() {
+  _close(cancel) {
     const overlayContent = this.getRootNode().host;
     const overlay = overlayContent ? overlayContent.getRootNode().host : null;
     if (overlay) {
       overlay.opened = false;
     }
 
-    this.dispatchEvent(new CustomEvent('close', {bubbles: true, composed: true}));
+    this.dispatchEvent(new CustomEvent('close', {bubbles: true, composed: true, detail: {cancel : !!cancel} }));
   }
 
   _cancel() {
     this.focusedDate = this.selectedStartDate;
-    this._close();
+    this._close(true);
   }
 
   _preventDefault(e) {
@@ -884,11 +884,22 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
             this._onTodayTap();
           } else {
             var focusedDate = this.focusedDate;
-            if (dateEquals(focusedDate, this.selectedStartDate)) {
-              this.selectedStartDate = '';
-              this.focusedDate = focusedDate;
+            if (this.selectingStartDate) {
+              if (dateEquals(focusedDate, this.selectedStartDate)) {
+                this.selectedStartDate = '';
+                this.focusedDate = focusedDate;
+              } else {
+                this.selectedStartDate = focusedDate;
+                this.selectingStartDate = false;
+              }
             } else {
-              this.selectedStartDate = focusedDate;
+              if (dateEquals(focusedDate, this.selectedEndDate)) {
+                this.selectedEndDate = '';
+                this.focusedDate = focusedDate;
+              } else {
+                this.selectedEndDate = focusedDate;
+                this._close();
+              }
             }
           }
           break;

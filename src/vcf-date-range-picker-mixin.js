@@ -91,11 +91,6 @@ export const DateRangePickerMixin = (subclass) =>
       label: String,
 
       /**
-       * The label for this element.
-       */
-      endLabel: String,
-
-      /**
        * Set true to open the date selector overlay.
        */
       opened: {
@@ -481,12 +476,16 @@ export const DateRangePickerMixin = (subclass) =>
     if (this._selectingStartDate) {
       this._selectingStartDate = false;
     } else {
-      this._selectingStartDate = true;
-      if (e) {
-      e.stopPropagation();
+      e && e.stopPropagation();
+      if (this._selectedStartDate && this._selectedStartDate<=this._selectedEndDate) {
+        this._selectingStartDate = true;
+        this._focus();
+        this.close();
+      } else {
+        this._selectingStartDate = false;
+        this._selectedStartDate = this._selectedEndDate;
+        this._selectedEndDate = undefined;
       }
-      this._focus();
-      this.close();
     }
   }
 
@@ -494,6 +493,9 @@ export const DateRangePickerMixin = (subclass) =>
   _close(e) {
     if (e) {
       e.stopPropagation();
+    }
+    if (e.detail) {
+      this._cancelled = e.detail.cancel;
     }
     this._focus();
     this.close();
@@ -584,6 +586,7 @@ export const DateRangePickerMixin = (subclass) =>
 
   /** @private */
   _openedChanged(opened) {
+    this._selectingStartDate = true;
     if (opened && !this._overlayInitialized) {
       this._initOverlay();
     }
@@ -607,11 +610,6 @@ export const DateRangePickerMixin = (subclass) =>
 
     this.__keepInputValue || this._applyStartInputValue(selectedDate);
 
-    var startDate = this._extractStartDate(this.value);
-    if (value !== startDate) {
-      this.validateStart();
-      this.value = value + ";" + this._extractEndDate(this.value);
-    }
     this.__userInputOccurred = false;
     this.__dispatchChange = false;
     this._ignoreFocusedDateChange = true;
@@ -631,11 +629,6 @@ export const DateRangePickerMixin = (subclass) =>
 
     this.__keepInputValue || this._applyEndInputValue(selectedDate);
 
-    var endDate = this._extractEndDate(this.value);
-    if (value !== endDate) {
-      this.validateEnd();
-      this.value = this._extractStartDate(this.value) + ";" + value;
-    }
     this.__userInputOccurred = false;
     this.__dispatchChange = false;
     this._ignoreFocusedDateChange = true;
@@ -650,8 +643,11 @@ export const DateRangePickerMixin = (subclass) =>
     }
     this.__userInputOccurred = true;
     if (!this._ignoreFocusedDateChange && !this._noInput) {
-      // FIX: Just using start value, don't know what to do
-      this._applyStartInputValue(focusedDate);
+      if (this._selectingStartDate) {
+        this._applyStartInputValue(focusedDate);
+      } else {
+        this._applyEndInputValue(focusedDate);
+      }
     }
   }
 
@@ -672,12 +668,12 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   /** @private */
-  _handleDateChange(property, value, oldValue) {
+  _handleDateChange(property, value, oldValue) {	
     if (!value) {
       this[property] = '';
       return;
     }
-
+	
     var date = this._parseDate(value);
     if (!date) {
       return false;
@@ -698,11 +694,18 @@ export const DateRangePickerMixin = (subclass) =>
     var endDate = this._extractEndDate(value);
     if (startDate && !this._handleDateChange('_selectedStartDate', startDate, oldValue)) {
       startDate="";
+      this._selectedStartDate = null;
+    } else {
+      this._selectedStartDate = this._parseDate(startDate);
     }
     if (endDate && !this._handleDateChange('_selectedEndDate', endDate, oldValue)) {
       endDate="";
-    }    
-    value = startDate + ";" + (endDate==undefined?"":endDate);  
+      this._selectedEndDate = null;
+    } else {
+      this._selectedEndDate = this._parseDate(endDate);
+    }
+
+    this.value = startDate + ";" + endDate;
   }
 
   _extractStartDate(value) {
@@ -857,7 +860,9 @@ export const DateRangePickerMixin = (subclass) =>
       const parsedDate = this._getParsedDate(inputValue);
 
       if (this._isValidDate(parsedDate)) {
-        this._selectedStartDate = parsedDate;
+        if (this._selectedStartDate<parsedDate || this._selectedStartDate>parsedDate) {
+            this._selectedStartDate = parsedDate;
+        }
       } else {
         this.__keepInputValue = true;
         this._selectedStartDate = null;
@@ -923,7 +928,7 @@ export const DateRangePickerMixin = (subclass) =>
     // Note (Yuriy): Workaround `this._inputValue` is used in order
     // to avoid breaking change on custom `checkValidity`.
     // Can be removed with next major.
-    return !(this.invalid = !this.checkStartValidity(this._inputValue));
+    return !(this.invalid = !this.checkStartValidity(this._inputStartValue));
   }
 
   /**
@@ -936,7 +941,7 @@ export const DateRangePickerMixin = (subclass) =>
     // Note (Yuriy): Workaround `this._inputValue` is used in order
     // to avoid breaking change on custom `checkValidity`.
     // Can be removed with next major.
-    return !(this.invalid = !this.checkEndValidity(this._inputValue));
+    return !(this.invalid = !this.checkEndValidity(this._inputEndValue));
   }
 
   /**
@@ -1024,6 +1029,13 @@ export const DateRangePickerMixin = (subclass) =>
       this._overlayInitialized && this._overlayContent.focus();
     } else {
       this._inputEndElement.focus();
+    }
+  }
+
+  /** @protected */
+  _clearStartTextField(e) {
+    if (e.detail.sourceEvent.__fromClearButton) {
+      this._inputStartElement.clear();
     }
   }
 
@@ -1174,16 +1186,26 @@ export const DateRangePickerMixin = (subclass) =>
         {
           if (e.shiftKey) {
             this.close();
+            this.blur();
           } else {
+            const startParsedDate = this._getParsedDate(this._inputStartValue);
+            if (this._isValidDate(startParsedDate)) {
+              this._selectedStartDate = startParsedDate;
+            }
             e.preventDefault();
             this._inputEndElement.focus();
           }
         } else if (document.activeElement === this && this.shadowRoot.activeElement === this._inputEndElement) {
           if (e.shiftKey) {
+            const endParsedDate = this._getParsedDate(this._inputEndValue);
+            if (this._isValidDate(endParsedDate)) {
+              this._selectedEndDate = endParsedDate;
+            }
             e.preventDefault();
             this._inputStartElement.focus();
           } else {
             this.close();
+            this.blur();
           }
         }
         break;

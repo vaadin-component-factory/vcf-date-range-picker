@@ -113,11 +113,11 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       }
 
       [part="start-text-field"] {
-        width: 50%;
+        width: 11ch;
         min-width: 0;
       }
       [part="end-text-field"] {
-        width: 50%;
+        width: 16ch;
         min-width: 0;
       }
 
@@ -137,34 +137,34 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         disabled="[[disabled]]"
         readonly="[[readonly]]"
         error-message="[[errorMessage]]"
-        clear-button-visible$="[[clearButtonVisible]]"
         aria-label$="[[label]]"
         part="start-text-field"
         helper-text="[[helperText]]"
         theme$="[[theme]]"
         class="startDate"
+        autoselect="true"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperText]]</slot>
-    </vcf-date-range-picker-text-field><vcf-date-range-picker-text-field id="endInput"
+    </vcf-date-range-picker-text-field><div part="dash"></div><vcf-date-range-picker-text-field id="endInput"
         role="application"
         autocomplete="off"
         on-focus="_focusEnd"
+        on-change="_clearStartTextField"
         value="{{_userInputEndValue}}"
         invalid="[[invalid]]"
-        label="[[endLabel]]"
+        label="&nbsp;"
         name="[[name]]"
         placeholder="[[endPlaceholder]]"
         required="[[required]]"
         disabled="[[disabled]]"
         readonly="[[readonly]]"
-        error-message="[[endErrorMessage]]"
         clear-button-visible$="[[clearButtonVisible]]"
-        aria-label$="[[endLabel]]"
         part="end-text-field"
         helper-end-text="[[helperEndText]]"
         theme$="[[theme]]"
         class="endDate"
+        autoselect="true"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperEndText]]</slot>
@@ -243,12 +243,6 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
        * @attr {string} error-message
        */
       errorMessage: String,
-
-      /**
-       * The error message to display when the end input is invalid.
-       * @attr {string} error-message
-       */
-      endErrorMessage: String,
 
       /**
        * A placeholder string in addition to the label. If this is set, the label will always float.
@@ -346,6 +340,16 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     }
     if (e.detail.sourceEvent && e.detail.sourceEvent.composedPath().indexOf(this) !== -1) {
       e.preventDefault();
+    }
+
+    if (this._cancelled) {
+      this._cancelled = false;
+	  const startDate = this._parseDate(this._extractStartDate(this.value));
+      const endDate = this._parseDate(this._extractEndDate(this.value));
+      this._selectedStartDate = startDate;
+      this._selectedEndDate = endDate;
+    } else if (this._selectedStartDate && this._selectedEndDate) {
+      this.value = this._formatISO(this._selectedStartDate)+";"+this._formatISO(this._selectedEndDate);
     }
   }
 
