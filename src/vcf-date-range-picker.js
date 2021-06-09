@@ -186,6 +186,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
             selected-start-date="{{_selectedStartDate}}"
             selected-end-date="{{_selectedEndDate}}"
             selecting-start-date="{{_selectingStartDate}}"
+            hide-side-panel="{{hideSidePanel}}"
             slot="dropdown-content"
             focused-date="{{_focusedDate}}"
             show-week-numbers="[[showWeekNumbers]]"
@@ -277,6 +278,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
        * @type {boolean}
        */
       readonly: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
+      hideSidePanel: {
         type: Boolean,
         value: false,
         reflectToAttribute: true

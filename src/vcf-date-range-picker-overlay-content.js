@@ -174,7 +174,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         [[_yearAfterXMonths(_visibleMonthIndex)]]
       </div>
     </div>
-    <div on-touchend="_preventDefault" role="toolbar" part="toolbar" id="toolbarDiv">
+    <div on-touchend="_preventDefault" role="toolbar" part="toolbar" id="toolbarDiv" hidden="[[hideSidePanel]]">
       <vaadin-button id="todayButton" theme="tertiary" part="today-button" disabled="[[!_isTodayAllowed(minDate, maxDate)]]" on-tap="_onTodayTap">
         [[i18n.today]]
       </vaadin-button>
@@ -269,6 +269,15 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         type: Boolean,
         value: true,
         notify: true
+      },
+
+      /**
+       * Boolean to control the visibility of the side panel
+       */
+      hideSidePanel: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
       },
 
       /**
