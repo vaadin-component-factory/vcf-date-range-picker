@@ -293,6 +293,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         value: false
       },
 
+      _classNamesForDates: {
+        type: Object,
+        value: {},
+        notify: true
+      },
+
       /** @private */
       _userInputStartValue: String,
       _userInputEndValue: String
@@ -329,6 +335,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         this.__dispatchChange = true;
       }
     });
+  }
+
+  setClassNameForDates(className, dates) {
+    var newJson = JSON.parse(JSON.stringify(this._classNamesForDates));
+    newJson[className] = dates;
+    this._classNamesForDates = newJson;
   }
 
   /** @private */

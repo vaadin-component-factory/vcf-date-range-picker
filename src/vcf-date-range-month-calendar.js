@@ -79,6 +79,7 @@ class MonthCalendarElement extends ThemableMixin(GestureEventListeners(PolymerEl
                 start$="[[_dateEquals(item, selectedStartDate)]]"
                 end$="[[_dateEquals(item, selectedEndDate)]]"
                 focused$="[[_dateEquals(item, focusedDate)]]"
+                class$="[[_calculateClassNames(item)]]"
                 date="[[item]]"
                 disabled$="[[!_dateAllowed(item, minDate, maxDate)]]"
                 role$="[[_getRole(item)]]"
@@ -126,6 +127,16 @@ class MonthCalendarElement extends ThemableMixin(GestureEventListeners(PolymerEl
       selectingStartDate: {
         type: Boolean,
         value: true
+      },
+
+      classNamesForDates: {
+        type: String,
+        notify: true
+      },
+
+      _classNamesForDates: {
+        type: Object,
+        value: {}
       },
 
       /**
@@ -180,7 +191,8 @@ class MonthCalendarElement extends ThemableMixin(GestureEventListeners(PolymerEl
 
   static get observers() {
     return [
-      '_showWeekNumbersChanged(showWeekNumbers, i18n.firstDayOfWeek)'
+      '_showWeekNumbersChanged(showWeekNumbers, i18n.firstDayOfWeek)',
+      '_classNamesForDatesChanged(classNamesForDates)'
     ];
   }
 
@@ -272,6 +284,39 @@ class MonthCalendarElement extends ThemableMixin(GestureEventListeners(PolymerEl
     } else {
       this.removeAttribute('week-numbers');
     }
+  }
+
+  _classNamesForDatesChanged(classNamesForDate) {
+    // parse string into json
+    this._classNamesForDates = JSON.parse(classNamesForDate);
+  }
+
+  _calculateClassNames(date) {
+    // return class names according to date
+    var result = "";
+    for (let [key, value] of Object.entries(this._classNamesForDates)) {
+      value.forEach(function (item, index) {
+        var curDate = this._parseDate(item);
+        if (this._dateEquals(date, curDate)) {
+          result = result + " " + key;
+        }
+      }.bind(this));
+    }
+    return result;
+  }
+
+  _parseDate(str) {
+    // Parsing with RegExp to ensure correct format
+    var parts = /^([-+]\d{1}|\d{2,4}|[-+]\d{6})-(\d{1,2})-(\d{1,2})$/.exec(str);
+    if (!parts) {
+      return;
+    }
+
+    var date = new Date(0, 0); // Wrong date (1900-01-01), but with midnight in local time
+    date.setFullYear(parseInt(parts[1], 10));
+    date.setMonth(parseInt(parts[2], 10) - 1);
+    date.setDate(parseInt(parts[3], 10));
+    return date;
   }
 
   _showWeekSeparator(showWeekNumbers, firstDayOfWeek) {

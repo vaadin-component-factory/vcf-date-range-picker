@@ -437,6 +437,8 @@ export const DateRangePickerMixin = (subclass) =>
     // Keep focus attribute in focusElement for styling
     this._overlayContent.addEventListener('focus', () => this.focusElement._setFocused(true));
 
+    this._overlayContent.setClassNameForDates(this._classNamesForDates);
+
     this.$.overlay.addEventListener('vaadin-overlay-close', this._onVaadinOverlayClose.bind(this));
 
     const bringToFrontListener = (e) => {
