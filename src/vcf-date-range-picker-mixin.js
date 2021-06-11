@@ -322,6 +322,16 @@ export const DateRangePickerMixin = (subclass) =>
         value: ''
       },
 
+      _startXPosition: {
+        type: Number,
+        value: null
+      },
+
+      _startYPosition: {
+        type: Number,
+        value: null
+      },
+
       /** @private */
       _noInput: {
         type: Boolean,
@@ -468,6 +478,17 @@ export const DateRangePickerMixin = (subclass) =>
     * Opens the dropdown.
     */
   open() {
+    if (!this.disabled && !this.readonly) {
+      this.opened = true;
+    }
+  }
+
+  /**
+  * Opens the dropdown.
+  */
+  openOnPosition(x,y) {
+    this._startXPosition = x;
+    this._startYPosition = y;
     if (!this.disabled && !this.readonly) {
       this.opened = true;
     }
@@ -740,32 +761,40 @@ export const DateRangePickerMixin = (subclass) =>
       return;
     }
     if (!this._fullscreen) {
-      // FIX: Just used _inputStartElement don't know what to do
-      const inputRect = this._inputStartElement.getBoundingClientRect();
 
-      const bottomAlign = inputRect.top > window.innerHeight / 2;
-      const rightAlign = inputRect.left + this.clientWidth / 2 > window.innerWidth / 2;
-
-      if (rightAlign) {
-        const viewportWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
-        this.$.overlay.setAttribute('right-aligned', '');
-        this.$.overlay.style.removeProperty('left');
-        this.$.overlay.style.right = (viewportWidth - inputRect.right) + 'px';
-      } else {
+      if (this._startXPosition && this._startYPosition) {
         this.$.overlay.removeAttribute('right-aligned');
-        this.$.overlay.style.removeProperty('right');
-        this.$.overlay.style.left = inputRect.left + 'px';
-      }
-
-      if (bottomAlign) {
-        const viewportHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
-        this.$.overlay.setAttribute('bottom-aligned', '');
-        this.$.overlay.style.removeProperty('top');
-        this.$.overlay.style.bottom = (viewportHeight - inputRect.top) + 'px';
-      } else {
         this.$.overlay.removeAttribute('bottom-aligned');
-        this.$.overlay.style.removeProperty('bottom');
-        this.$.overlay.style.top = inputRect.bottom + 'px';
+        this.$.overlay.style.setProperty("top",this._startYPosition + "px");
+        this.$.overlay.style.setProperty("left",this._startXPosition + "px");
+      } else {
+        // FIX: Just used _inputStartElement don't know what to do
+        const inputRect = this._inputStartElement.getBoundingClientRect();
+
+        const bottomAlign = inputRect.top > window.innerHeight / 2;
+        const rightAlign = inputRect.left + this.clientWidth / 2 > window.innerWidth / 2;
+
+        if (rightAlign) {
+          const viewportWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+          this.$.overlay.setAttribute('right-aligned', '');
+          this.$.overlay.style.removeProperty('left');
+          this.$.overlay.style.right = (viewportWidth - inputRect.right) + 'px';
+        } else {
+          this.$.overlay.removeAttribute('right-aligned');
+          this.$.overlay.style.removeProperty('right');
+          this.$.overlay.style.left = inputRect.left + 'px';
+        }
+
+        if (bottomAlign) {
+          const viewportHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
+          this.$.overlay.setAttribute('bottom-aligned', '');
+          this.$.overlay.style.removeProperty('top');
+          this.$.overlay.style.bottom = (viewportHeight - inputRect.top) + 'px';
+        } else {
+          this.$.overlay.removeAttribute('bottom-aligned');
+          this.$.overlay.style.removeProperty('bottom');
+          this.$.overlay.style.top = inputRect.bottom + 'px';
+        }
       }
     }
 
