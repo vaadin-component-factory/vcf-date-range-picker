@@ -120,6 +120,9 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         width: 16ch;
         min-width: 0;
       }
+      [part="dash"][hidden] {
+        display: none;
+      }
 
     </style>
 
@@ -143,10 +146,11 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         theme$="[[theme]]"
         class="startDate"
         autoselect="true"
+        hidden="[[hideTextFields]]"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperText]]</slot>
-    </vcf-date-range-picker-text-field><div part="dash"></div><vcf-date-range-picker-text-field id="endInput"
+    </vcf-date-range-picker-text-field><div hidden="[[hideTextFields]]" part="dash"></div><vcf-date-range-picker-text-field id="endInput"
         role="application"
         autocomplete="off"
         on-focus="_focusEnd"
@@ -165,6 +169,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         theme$="[[theme]]"
         class="endDate"
         autoselect="true"
+        hidden="[[hideTextFields]]"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperEndText]]</slot>
@@ -284,6 +289,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       },
 
       hideSidePanel: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
+      hideTextFields: {
         type: Boolean,
         value: false,
         reflectToAttribute: true
