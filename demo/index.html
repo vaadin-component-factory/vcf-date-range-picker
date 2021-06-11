@@ -31,6 +31,16 @@
           dateRangePicker.value="2021-05-01;2021-05-31";
           dateRangePicker.close();
         });
+
+        const openDateRangePickerButton = document.querySelector('#openDateRangePicker');
+        const dateRangePickerWithoutTextFields = document.querySelector('#withoutTextFields');
+        const span = document.querySelector('#selectedRange');
+        dateRangePickerWithoutTextFields.addEventListener('value-changed', function(e) {
+          span.textContent = "Selected range: " + e.detail.value;
+        });
+        openDateRangePickerButton.addEventListener('click', function(e) {
+          dateRangePickerWithoutTextFields.openOnPosition(event.clientX,event.clientY);
+        });
       });
     </script>
   </head>
@@ -54,6 +64,16 @@
         <template preserve-content>
           <vcf-date-range-picker disabled label="Disabled" value="1990-01-28"></vcf-date-range-picker>
           <vcf-date-range-picker readonly label="Read-only" value="1990-01-28"></vcf-date-range-picker>
+        </template>
+      </demo-snippet>
+
+      <h3>Date Range Picker without visible textfields</h3>
+      <p>Click the button to open the date range picker</p>
+      <demo-snippet id="auto-open-disabled" when-defined="vcf-date-range-picker">
+        <template preserve-content>
+          <vcf-date-range-picker id="withoutTextFields" label="Label" auto-open-disabled hide-text-fields></vcf-date-range-picker>
+          <vaadin-button id="openDateRangePicker">Open Date Range Picker</vaadin-button>
+          <span id="selectedRange"></span>
         </template>
       </demo-snippet>
   
@@ -98,7 +118,7 @@
           <vcf-date-range-picker label="Label" auto-open-disabled></vcf-date-range-picker>
         </template>
       </demo-snippet>
-        
+
     </main>
   </body>
 </html>
