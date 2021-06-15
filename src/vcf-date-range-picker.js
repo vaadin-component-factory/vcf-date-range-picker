@@ -379,6 +379,9 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       this._selectedStartDate = startDate;
       this._selectedEndDate = endDate;
     } else if (this._selectedStartDate && this._selectedEndDate) {
+      if (this._selectedStartDate >= this._selectedEndDate) {
+        this._selectedEndDate = null;
+      }
       this.value = this._formatISO(this._selectedStartDate)+";"+this._formatISO(this._selectedEndDate);
     }
   }

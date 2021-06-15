@@ -498,6 +498,9 @@ export const DateRangePickerMixin = (subclass) =>
   _closeOnTap(e) {
     if (this._selectingStartDate) {
       this._selectingStartDate = false;
+      if (this._selectedEndDate && this._selectedStartDate>=this._selectedEndDate) {
+        this._selectedEndDate = undefined;
+      }
     } else {
       e && e.stopPropagation();
       if (this._selectedStartDate && this._selectedStartDate<=this._selectedEndDate) {
