@@ -16,19 +16,33 @@ registerStyles(
       }
 
       [part="label"] {
-        max-width: 32ch;  
+        max-width: 100%;
+        overflow: visible;
       }
 
       [part="error-message"] {
-        width: 35ch;
-        max-width: 35ch;
-        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        overflow: visible;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
 
       [part="value"] {
         --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 0.25em);
+      }
+      :host(.dash) {
+        pointer-events: none;
+      }
+      :host(.dash) [part="input-field"] {
+        border-radius: 0;
+      }
+      :host(:not([disabled]):not([invalid]):not([readonly]).dash) [part="input-field"] {
+        background-color: var(--lumo-contrast-10pct);
+      }
+
+      :host(.dash) [part="input-field"]::after {
+        border: none;
       }
 
       :host([id="startInput"]) [part="input-field"] {

@@ -41,7 +41,8 @@
     "@vaadin/vaadin-material-styles": "^1.3.2",
     "@vaadin/vaadin-overlay": "^3.5.0",
     "@vaadin/vaadin-text-field": "^2.8.0",
-    "@vaadin/vaadin-themable-mixin": "^1.6.1"
+    "@vaadin/vaadin-themable-mixin": "^1.6.1",
+    "@vaadin/vaadin-form-layout": "^2.3.0"
   },
   "devDependencies": {
     "@polymer/iron-component-page": "^4.0.0",

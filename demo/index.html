@@ -83,7 +83,21 @@
           <vcf-date-range-picker clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
         </template>
       </demo-snippet>
-  
+
+      <h3>Inside Form Layout</h3>
+      <demo-snippet>
+        <template preserve-content>
+          <vaadin-form-layout>
+            <vaadin-text-field label="First Name" value="Jane"></vaadin-text-field>
+            <vcf-date-range-picker clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
+            <vaadin-text-field label="Email" value="jane.doe@example.com"></vaadin-text-field>
+            <vaadin-date-picker label="Birthday" value="1993-06-23"></vaadin-date-picker>
+            <vaadin-text-area label="Bio" colspan="2" value="My name is Jane."></vaadin-text-area>
+            <vcf-date-range-picker colspan="2" clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
+          </vaadin-form-layout>
+        </template>
+      </demo-snippet>
+
       <h3>Helper text without side panel</h3>
       <p>Use the <code>helper-text</code> attribute or add content to the <code>helper</code> slot to set helper content.</p>
       <demo-snippet id="helper-text">
