@@ -174,7 +174,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         [[_yearAfterXMonths(_visibleMonthIndex)]]
       </div>
     </div>
-    <div on-touchend="_preventDefault" role="toolbar" part="toolbar" id="toolbarDiv">
+    <div on-touchend="_preventDefault" role="toolbar" part="toolbar" id="toolbarDiv" hidden="[[hideSidePanel]]">
       <vaadin-button id="todayButton" theme="tertiary" part="today-button" disabled="[[!_isTodayAllowed(minDate, maxDate)]]" on-tap="_onTodayTap">
         [[i18n.today]]
       </vaadin-button>
@@ -213,6 +213,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
             selected-start-date="{{selectedStartDate}}"
             selected-end-date="{{selectedEndDate}}"
             selecting-start-date="{{selectingStartDate}}"
+            class-names-for-dates="[[classNamesForDatesString]]"
             focused-date="[[focusedDate]]"
             ignore-taps="[[_ignoreTaps]]"
             show-week-numbers="[[showWeekNumbers]]"
@@ -271,12 +272,32 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
       },
 
       /**
+       * Boolean to control the visibility of the side panel
+       */
+      hideSidePanel: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
+      /**
        * Date value which is focused using keyboard.
        */
       focusedDate: {
         type: Date,
         notify: true,
         observer: '_focusedDateChanged'
+      },
+
+      classNamesForDatesString: {
+        type: String,
+        notify: true
+      },
+
+      classNamesForDates: {
+        type: Object,
+        value: {},
+        notify: true
       },
 
       _focusedMonthDate: Number,
@@ -347,6 +368,11 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
     addListener(this, 'tap', this._stopPropagation);
     this.addEventListener('focus', this._onOverlayFocus.bind(this));
     this.addEventListener('blur', this._onOverlayBlur.bind(this));
+  }
+  
+  setClassNameForDates(_classNamesForDates) {
+    this.classNamesForDates = _classNamesForDates;
+    this.classNamesForDatesString = JSON.stringify(this.classNamesForDates);
   }
 
   /**

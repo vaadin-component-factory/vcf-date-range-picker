@@ -123,6 +123,10 @@ registerStyles(
         margin-right: 0px;
       }
 
+      [part="toolbar"][hidden] {
+        display:none;
+      }
+
       @supports (mask-image: linear-gradient(#000, #000)) or (-webkit-mask-image: linear-gradient(#000, #000)) {
         [part="toolbar"] {
           box-shadow: none;

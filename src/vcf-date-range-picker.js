@@ -120,6 +120,9 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         width: 16ch;
         min-width: 0;
       }
+      [part="dash"][hidden] {
+        display: none;
+      }
 
     </style>
 
@@ -143,10 +146,11 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         theme$="[[theme]]"
         class="startDate"
         autoselect="true"
+        hidden="[[hideTextFields]]"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperText]]</slot>
-    </vcf-date-range-picker-text-field><div part="dash"></div><vcf-date-range-picker-text-field id="endInput"
+    </vcf-date-range-picker-text-field><div hidden="[[hideTextFields]]" part="dash"></div><vcf-date-range-picker-text-field id="endInput"
         role="application"
         autocomplete="off"
         on-focus="_focusEnd"
@@ -165,6 +169,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         theme$="[[theme]]"
         class="endDate"
         autoselect="true"
+        hidden="[[hideTextFields]]"
       >
       <slot name="prefix" slot="prefix"></slot>
       <slot name="helper" slot="helper">[[helperEndText]]</slot>
@@ -186,6 +191,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
             selected-start-date="{{_selectedStartDate}}"
             selected-end-date="{{_selectedEndDate}}"
             selecting-start-date="{{_selectingStartDate}}"
+            hide-side-panel="{{hideSidePanel}}"
             slot="dropdown-content"
             focused-date="{{_focusedDate}}"
             show-week-numbers="[[showWeekNumbers]]"
@@ -282,6 +288,18 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         reflectToAttribute: true
       },
 
+      hideSidePanel: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
+      hideTextFields: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
       /**
        * This property is set to true when the control value invalid.
        * @type {boolean}
@@ -291,6 +309,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         reflectToAttribute: true,
         notify: true,
         value: false
+      },
+
+      _classNamesForDates: {
+        type: Object,
+        value: {},
+        notify: true
       },
 
       /** @private */
@@ -331,6 +355,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     });
   }
 
+  setClassNameForDates(className, dates) {
+    var newJson = JSON.parse(JSON.stringify(this._classNamesForDates));
+    newJson[className] = dates;
+    this._classNamesForDates = newJson;
+  }
+
   /** @private */
   _onVaadinOverlayClose(e) {
     if (this._openedWithFocusRing && this.hasAttribute('focused')) {
@@ -349,6 +379,9 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       this._selectedStartDate = startDate;
       this._selectedEndDate = endDate;
     } else if (this._selectedStartDate && this._selectedEndDate) {
+      if (this._selectedStartDate >= this._selectedEndDate) {
+        this._selectedEndDate = null;
+      }
       this.value = this._formatISO(this._selectedStartDate)+";"+this._formatISO(this._selectedEndDate);
     }
   }
