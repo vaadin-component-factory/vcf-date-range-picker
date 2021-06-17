@@ -114,74 +114,83 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
       [part="start-text-field"] {
         align-self: baseline;
+        flex-grow: 0;
+        --vaadin-text-field-default-width: 11ch;
       }
       [part="end-text-field"] {
         align-self: baseline;
+        flex-grow: 1;
+        --vaadin-text-field-default-width: 16ch;
       }
       [part="dash"][hidden] {
         display: none;
       }
+      [part="drp-container"] {
+        display:flex; 
+        min-width:100%; 
+        max-width:100%; 
+      }
 
     </style>
 
-
-    <vcf-date-range-picker-text-field id="startInput"
-        role="application"
-        autocomplete="off"
-        on-focus="_focusStart"
-        value="{{_userInputStartValue}}"
-        invalid="[[invalid]]"
-        label="[[label]]"
-        name="[[name]]"
-        placeholder="[[placeholder]]"
-        required="[[required]]"
-        disabled="[[disabled]]"
-        readonly="[[readonly]]"
-        error-message="[[errorMessage]]"
-        aria-label$="[[label]]"
-        part="start-text-field"
-        helper-text="[[helperText]]"
-        theme$="[[theme]]"
-        class="startDate"
-        autoselect="true"
-        hidden="[[hideTextFields]]"
-      >
-      <slot name="prefix" slot="prefix"></slot>
-      <slot name="helper" slot="helper">[[helperText]]</slot>
-    </vcf-date-range-picker-text-field
-    ><vcf-date-range-picker-text-field 
-        disabled="[[disabled]]" 
-        class="dash" 
-        value="—" 
-        invalid="[[invalid]]"
-        readonly="[[readonly]]"
-        hidden="[[hideTextFields]]" 
-        part="dash"></vcf-date-range-picker-text-field
-    ><vcf-date-range-picker-text-field id="endInput"
-        role="application"
-        autocomplete="off"
-        on-focus="_focusEnd"
-        on-change="_clearStartTextField"
-        value="{{_userInputEndValue}}"
-        invalid="[[invalid]]"
-        name="[[name]]"
-        placeholder="[[endPlaceholder]]"
-        required="[[required]]"
-        disabled="[[disabled]]"
-        readonly="[[readonly]]"
-        clear-button-visible$="[[clearButtonVisible]]"
-        part="end-text-field"
-        helper-end-text="[[helperEndText]]"
-        theme$="[[theme]]"
-        class="endDate"
-        autoselect="true"
-        hidden="[[hideTextFields]]"
-      >
-      <slot name="prefix" slot="prefix"></slot>
-      <slot name="helper" slot="helper">[[helperEndText]]</slot>
-      <div part="toggle-button" slot="suffix" on-tap="_toggle" role="button" aria-label$="[[i18n.calendar]]" aria-expanded$="[[_getAriaExpanded(opened)]]"></div>
-    </vcf-date-range-picker-text-field>
-
+    <div part="drp-container">
+      <vcf-date-range-picker-text-field id="startInput"
+          role="application"
+          autocomplete="off"
+          on-focus="_focusStart"
+          value="{{_userInputStartValue}}"
+          invalid="[[invalid]]"
+          label="[[label]]"
+          name="[[name]]"
+          placeholder="[[placeholder]]"
+          required="[[required]]"
+          disabled="[[disabled]]"
+          readonly="[[readonly]]"
+          error-message="[[errorMessage]]"
+          aria-label$="[[label]]"
+          part="start-text-field"
+          helper-text="[[helperText]]"
+          theme$="[[theme]]"
+          class="startDate"
+          autoselect="true"
+          hidden="[[hideTextFields]]"
+        >
+        <slot name="prefix" slot="prefix"></slot>
+        <slot name="helper" slot="helper">[[helperText]]</slot>
+      </vcf-date-range-picker-text-field
+      ><vcf-date-range-picker-text-field 
+          disabled="[[disabled]]" 
+          class="dash" 
+          value="—" 
+          invalid="[[invalid]]"
+          readonly="[[readonly]]"
+          hidden="[[hideTextFields]]" 
+          part="dash"></vcf-date-range-picker-text-field
+      ><vcf-date-range-picker-text-field id="endInput"
+          role="application"
+          autocomplete="off"
+          on-focus="_focusEnd"
+          on-change="_clearStartTextField"
+          value="{{_userInputEndValue}}"
+          invalid="[[invalid]]"
+          name="[[name]]"
+          placeholder="[[endPlaceholder]]"
+          required="[[required]]"
+          disabled="[[disabled]]"
+          readonly="[[readonly]]"
+          clear-button-visible$="[[clearButtonVisible]]"
+          part="end-text-field"
+          helper-end-text="[[helperEndText]]"
+          theme$="[[theme]]"
+          class="endDate"
+          autoselect="true"
+          hidden="[[hideTextFields]]"
+        >
+        <slot name="prefix" slot="prefix"></slot>
+        <slot name="helper" slot="helper">[[helperEndText]]</slot>
+        <div part="toggle-button" slot="suffix" on-tap="_toggle" role="button" aria-label$="[[i18n.calendar]]" aria-expanded$="[[_getAriaExpanded(opened)]]"></div>
+      </vcf-date-range-picker-text-field>
+    </div>
     <vcf-date-range-picker-overlay
         id="overlay"
         fullscreen$="[[_fullscreen]]"
