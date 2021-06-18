@@ -368,6 +368,21 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         this.__dispatchChange = true;
       }
     });
+
+    const wc = this;
+    const resizeObserver = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if(entry.contentBoxSize) {
+          var size = wc.shadowRoot.host.offsetWidth;
+          wc._inputStartElement.shadowRoot.querySelector('[part="label"]')
+            .setAttribute('style', "width: " + size + "px; max-width: max-content; overflow: hidden;");
+          wc._inputStartElement.shadowRoot.querySelector('[part="error-message"]')
+            .setAttribute('style', "width: " + size + "px; max-width: max-content; overflow: hidden;");
+        }
+      }
+    });
+    
+    resizeObserver.observe(this);
   }
 
   setClassNameForDates(className, dates) {
