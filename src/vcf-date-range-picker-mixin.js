@@ -519,9 +519,9 @@ export const DateRangePickerMixin = (subclass) =>
   _close(e) {
     if (e) {
       e.stopPropagation();
-    }
-    if (e.detail) {
-      this._cancelled = e.detail.cancel;
+      if (e.detail) {
+        this._cancelled = e.detail.cancel;
+      }
     }
     this._focus();
     this.close();
