@@ -561,20 +561,30 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
   }
 
   _onThisWeekTap() {
-    var lastSunday = this._getLastSunday(new Date());
-    this.selectedStartDate = lastSunday;
-    var nextSunday = new Date(lastSunday);
-    nextSunday.setDate(new Date(lastSunday.getDate() + 6));
-    this.selectedEndDate = nextSunday;
+    var lastFirstDay;
+    if (this.i18n.firstDayOfWeek === 1) {
+      lastFirstDay = this._getLastMonday(new Date());
+    } else {
+      lastFirstDay = this._getLastSunday(new Date());
+    }
+    this.selectedStartDate = lastFirstDay;
+    var nextMonday = new Date(lastFirstDay);
+    nextMonday.setDate(new Date(lastFirstDay.getDate() + 6));
+    this.selectedEndDate = nextMonday;
     this._close();
   }
 
   _onLastWeekTap() {
-    var lastSunday = this._getLastSunday(new Date());
-    lastSunday.setDate(lastSunday.getDate() - 7);
-    this.selectedStartDate = lastSunday;
-    var nextSunday = new Date(lastSunday);
-    nextSunday.setDate(new Date(lastSunday.getDate() + 6));
+    var lastFirstDay;
+    if (this.i18n.firstDayOfWeek === 1) {
+      lastFirstDay = this._getLastMonday(new Date());
+    } else {
+      lastFirstDay = this._getLastSunday(new Date());
+    }
+    lastFirstDay.setDate(lastFirstDay.getDate() - 7);
+    this.selectedStartDate = lastFirstDay;
+    var nextSunday = new Date(lastFirstDay);
+    nextSunday.setDate(new Date(lastFirstDay.getDate() + 6));
     this.selectedEndDate = nextSunday;
     this._close();
   }
@@ -614,6 +624,12 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
   _getLastSunday(d) {
     var t = new Date(d);
     t.setDate(t.getDate() - t.getDay());
+    return t;
+  }
+
+  _getLastMonday(d) {
+    var t = new Date(d);
+    t.setDate(t.getDate() - t.getDay() + 1);
     return t;
   }
 
