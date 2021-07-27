@@ -1227,6 +1227,7 @@ export const DateRangePickerMixin = (subclass) =>
               this._selectedStartDate = startParsedDate;
             }
             e.preventDefault();
+            this._selectingStartDate=false;
             this._inputEndElement.focus();
           }
         } else if (document.activeElement === this && this.shadowRoot.activeElement === this._inputEndElement) {
@@ -1236,6 +1237,7 @@ export const DateRangePickerMixin = (subclass) =>
               this._selectedEndDate = endParsedDate;
             }
             e.preventDefault();
+            this._selectingStartDate=true;
             this._inputStartElement.focus();
           } else {
             this.close();
