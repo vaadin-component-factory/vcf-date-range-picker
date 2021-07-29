@@ -1216,7 +1216,7 @@ export const DateRangePickerMixin = (subclass) =>
         }
         break;
       case 'tab':
-        if (document.activeElement === this && this.shadowRoot.activeElement === this._inputStartElement)
+        if (this.shadowRoot.activeElement === this._inputStartElement)
         {
           if (e.shiftKey) {
             this.close();
@@ -1230,7 +1230,7 @@ export const DateRangePickerMixin = (subclass) =>
             this._selectingStartDate=false;
             this._inputEndElement.focus();
           }
-        } else if (document.activeElement === this && this.shadowRoot.activeElement === this._inputEndElement) {
+        } else if (this.shadowRoot.activeElement === this._inputEndElement) {
           if (e.shiftKey) {
             const endParsedDate = this._getParsedDate(this._inputEndValue);
             if (this._isValidDate(endParsedDate)) {
