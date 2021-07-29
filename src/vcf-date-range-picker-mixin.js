@@ -668,7 +668,7 @@ export const DateRangePickerMixin = (subclass) =>
       return;
     }
     this.__userInputOccurred = true;
-    if (!this._ignoreFocusedDateChange && !this._noInput) {
+    if (this._selectingStartDate!==undefined && !this._ignoreFocusedDateChange && !this._noInput && this.opened) {
       if (this._selectingStartDate) {
         this._applyStartInputValue(focusedDate);
       } else {
