@@ -121,6 +121,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         align-self: baseline;
         flex-grow: 1;
         --vaadin-text-field-default-width: 16ch;
+        overflow: hidden;
       }
       [part="dash"][hidden] {
         display: none;
