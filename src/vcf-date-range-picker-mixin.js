@@ -1151,7 +1151,7 @@ export const DateRangePickerMixin = (subclass) =>
 
         break;
       case 'enter': {
-
+        if (this.shadowRoot.activeElement === this._inputEndElement) this._selectingStartDate=false;
         if (this._selectingStartDate) {
           const parsedStartDate = this._getParsedDate(this._inputStartValue);
           const isValidStartDate = this._isValidDate(parsedStartDate);
