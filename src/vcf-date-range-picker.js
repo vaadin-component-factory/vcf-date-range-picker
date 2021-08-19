@@ -467,7 +467,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
    * @protected
    */
   get focusElement() {
-    return this._inputStart() || this;
+    return this.shadowRoot.activeElement || this._inputStart() || this;
   }
 
   /** @private */
