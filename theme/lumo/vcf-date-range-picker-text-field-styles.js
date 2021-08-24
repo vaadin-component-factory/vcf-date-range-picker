@@ -48,6 +48,9 @@ registerStyles(
       :host([id="startInput"]) [part="input-field"] {
         padding-right:0px;
       }
+      :host([id="endInput"][focus-ring]) [part="value"] {
+        margin-left:-2px;
+      }
       :host([id="startInput"]) [part="value"] {
         padding-right:0px;
       }

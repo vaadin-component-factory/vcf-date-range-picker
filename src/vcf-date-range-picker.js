@@ -120,8 +120,15 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       [part="end-text-field"] {
         align-self: baseline;
         flex-grow: 1;
-        --vaadin-text-field-default-width: 16ch;
         overflow: hidden;
+        --vaadin-text-field-default-width: 16ch;
+      }
+      [focus-ring][part="end-text-field"] {
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+      [focus-ring][part="end-text-field"] [part="toggle-button"] {
+        margin-right: -2px;
       }
       [part="dash"][hidden] {
         display: none;
