@@ -41,6 +41,16 @@
         openDateRangePickerButton.addEventListener('click', function(e) {
           dateRangePickerWithoutTextFields.openOnPosition(event.clientX,event.clientY);
         });
+
+        var formLayout = document.querySelector('#formLayout');
+
+        formLayout.responsiveSteps = [
+          {minWidth: 0, columns: 1, labelsPosition: 'top'},
+          {minWidth: '10em', columns: 1},
+          {minWidth: '20em', columns: 2},
+          {minWidth: '30em', columns: 3}
+        ];
+
       });
     </script>
   </head>
@@ -87,8 +97,10 @@
       <h3>Inside Form Layout</h3>
       <demo-snippet>
         <template preserve-content>
-          <vaadin-form-layout>
+          <vaadin-form-layout id="formLayout">
             <vaadin-text-field label="First Name" value="Jane"></vaadin-text-field>
+            <vaadin-text-field label="Last Name" value="Smith"></vaadin-text-field>
+            <vaadin-text-field label="Address" value="A place"></vaadin-text-field>
             <vcf-date-range-picker clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
             <vaadin-text-field label="Email" value="jane.doe@example.com"></vaadin-text-field>
             <vaadin-date-picker label="Birthday" value="1993-06-23"></vaadin-date-picker>
