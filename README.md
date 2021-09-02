@@ -1,7 +1,6 @@
 [![npm version](https://badgen.net/npm/v/@vaadin-component-factory/vcf-date-range-picker)](https://www.npmjs.com/package/@vaadin-component-factory/vcf-date-range-picker)
-
-[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-date-range-picker)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/vaadinvcf-date-range-picker.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-date-range-picker)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-date-range-picker)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/vaadin-component-factoryvcf-date-range-picker.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-date-range-picker)
 
 # &lt;vcf-date-range-picker&gt;
 
@@ -12,7 +11,7 @@
 </vcf-date-range-picker>
 ```
 
-[<img src="./screenshot.png" width="439" alt="Screenshot of vcf-date-range-picker">](https://vaadin.com/components/vcf-date-range-picker)
+![GIF for fc-menuitem](./Demo.gif)
 
 ## Running demo
 
