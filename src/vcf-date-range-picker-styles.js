@@ -32,6 +32,7 @@
       [part="overlay"] {
         display: flex;
         flex: auto;
+        width: auto;
       }
 
       [part~="content"] {

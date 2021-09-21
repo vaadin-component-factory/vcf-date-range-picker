@@ -82,6 +82,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         left: 0;
         right: 0;
         bottom: 0;
+        min-width: 250px;
       }
 
       #scrollers[desktop] [part="months"] {
