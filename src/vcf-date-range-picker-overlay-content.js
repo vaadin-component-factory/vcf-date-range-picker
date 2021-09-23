@@ -62,6 +62,10 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         transform: rotate(180deg);
       }
 
+      :host([fullscreen]) {
+        flex-direction: column-reverse;
+      }
+
       #scrollers {
         display: flex;
         height: 100%;
@@ -139,6 +143,11 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         flex-shrink: 0;
         flex-direction: column;
         margin-right: 0px;
+      }
+
+      :host([fullscreen]) [part="toolbar"] {
+        flex-direction: row;
+        flex-wrap: wrap;
       }
 
       [part~="overlay-header"]:not([desktop]) {
