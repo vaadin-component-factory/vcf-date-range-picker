@@ -147,11 +147,6 @@ registerStyles(
       }
 
       @media (pointer: coarse) {
-        [part="date"]:hover:not([selected])::before,
-        [part="date"][focused]:not([selected])::before {
-          display: none;
-        }
-
         [part="date"][role="button"]:not([disabled]):active::before {
           display: block;
         }
