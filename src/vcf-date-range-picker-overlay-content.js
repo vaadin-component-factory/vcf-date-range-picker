@@ -54,7 +54,7 @@ class DatePickerOverlayContentElement extends ThemableMixin(DirMixin(GestureEven
         display: flex;
       }
 
-      [part="years-toggle-button"][desktop] {
+      [part="overlay-header"][desktop] {
         display: none;
       }
 

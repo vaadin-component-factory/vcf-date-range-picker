@@ -140,7 +140,7 @@ registerStyles(
       /* Narrow viewport mode (fullscreen) */
 
       :host([fullscreen]) [part="toolbar"] {
-        order: -1;
+        order: -3;
         background-color: var(--lumo-base-color);
       }
 
@@ -148,10 +148,13 @@ registerStyles(
         order: -2;
         height: var(--lumo-size-m);
         padding: var(--lumo-space-s);
-        position: absolute;
         left: 0;
         right: 0;
-        justify-content: center;
+        justify-content: end;
+        padding-top: 0px;
+        padding-right: 3px;
+        padding-bottom: 1px;
+        height: 0px;
       }
 
       :host([fullscreen]) [part="toggle-button"],
@@ -163,7 +166,9 @@ registerStyles(
       /* Very narrow screen (year scroller initially hidden) */
 
       [part="years-toggle-button"] {
+        font-size: var(--lumo-font-size-s);
         position: relative;
+        top: -7px;
         right: auto;
         display: flex;
         align-items: center;
