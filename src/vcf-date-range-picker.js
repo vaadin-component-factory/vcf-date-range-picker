@@ -163,8 +163,8 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
           autoselect="true"
           hidden="[[hideTextFields]]"
         >
-        <slot name="prefix" slot="prefix"></slot>
-        <slot name="helper" slot="helper">[[helperText]]</slot>
+        <slot name="prefix" slot="prefix"></slot>        
+        <div part="helper-text" slot="helper" name="helper-text">[[helperText]]</div>
       </vcf-date-range-picker-text-field
       ><vcf-date-range-picker-text-field 
           disabled="[[disabled]]" 
@@ -195,7 +195,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
           hidden="[[hideTextFields]]"
         >
         <slot name="prefix" slot="prefix"></slot>
-        <slot name="helper" slot="helper">[[helperEndText]]</slot>
+        <div part="helper-end-text" slot="helper" name="helper-end-text">[[helperEndText]]</div>
         <div part="toggle-button" slot="suffix" on-tap="_toggle" role="button" aria-label$="[[i18n.calendar]]" aria-expanded$="[[_getAriaExpanded(opened)]]"></div>
       </vcf-date-range-picker-text-field>
     </div>
@@ -287,19 +287,13 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
        * String used for the helper text.
        * @attr {string} helper-text
        */
-      helperText: {
-        type: String,
-        value: ''
-      },
+      helperText: String,
 
       /**
        * String used for the helper end text.
        * @attr {string} helper-text
        */
-        helperEndText: {
-        type: String,
-        value: ''
-      },
+        helperEndText: String,
 
       /**
        * Set to true to make this element read-only.
