@@ -7,7 +7,7 @@ import './vcf-date-range-picker-overlay.js';
 import './vcf-date-range-picker-overlay-content.js';
 import { DateRangePickerMixin } from './vcf-date-range-picker-mixin.js';
 import './vcf-date-range-picker-text-field.js';
-import { ElementMixin } from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
+import { ElementMixin } from '@vaadin/component-base/src/element-mixin.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
 /**
