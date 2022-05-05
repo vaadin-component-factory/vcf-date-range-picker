@@ -1,5 +1,5 @@
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
-import '@vaadin/vaadin-text-field/theme/lumo/vaadin-text-field.js';
+import '@vaadin/text-field/theme/lumo/vaadin-text-field.js';
 
 registerStyles(
   'vcf-date-range-picker-text-field',

@@ -1,4 +1,4 @@
-import { TextFieldElement } from '@vaadin/vaadin-text-field/src/vaadin-text-field.js';
+import { TextField } from '@vaadin/text-field';
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
 
 registerStyles(
@@ -42,10 +42,11 @@ registerStyles(
  * @extends OverlayElement
  * @private
  */
-class DateRangePickerTextFieldElement extends TextFieldElement {
+class DateRangePickerTextFieldElement extends TextField {
   static get is() {
     return 'vcf-date-range-picker-text-field';
   }
+
 }
 
 customElements.define(DateRangePickerTextFieldElement.is, DateRangePickerTextFieldElement);
