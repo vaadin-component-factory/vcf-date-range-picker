@@ -114,14 +114,13 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
 
       [part="start-text-field"] {
         align-self: baseline;
-        flex-grow: 0;
-        --vaadin-text-field-default-width: 11ch;
+        flex-grow: 1;
+        width: 11ch;
       }
       [part="end-text-field"] {
         align-self: baseline;
         flex-grow: 1;
-        overflow: hidden;
-        --vaadin-text-field-default-width: 16ch;
+        width: 16ch;
       }
       [focus-ring][part="end-text-field"] {
         padding-left: 2px;
@@ -138,7 +137,13 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         min-width:100%; 
         max-width:100%; 
       }
-
+      [part="end-text-field"] [part="toggle-button"] {
+        position: absolute;
+        right: 6px;
+      }
+      [part="end-text-field"]::part(clear-button) {
+        margin-right: 24px;
+      }
     </style>
 
     <div part="drp-container">
