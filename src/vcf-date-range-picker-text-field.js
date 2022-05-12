@@ -32,6 +32,9 @@ registerStyles(
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
       }
+      ::slotted(input) {
+        --_lumo-text-field-overflow-mask-image: none;
+      }
       `,
   { moduleId: 'vcf-date-range-picker-text-field-styles' }
 );
@@ -47,6 +50,21 @@ class DateRangePickerTextFieldElement extends TextField {
     return 'vcf-date-range-picker-text-field';
   }
 
+  _onClearButtonClick(event) {
+    event.preventDefault();
+    this.inputElement.focus();
+    this.__clear();
+  }
+
+  __clear() {
+    this.clear();
+    const inputEvent = new Event('input', { bubbles: true, composed: true });
+    inputEvent.__fromClearButton = true;
+    const changeEvent = new Event('change', { bubbles: true });
+    changeEvent.__fromClearButton = true;
+    this.inputElement.dispatchEvent(inputEvent);
+    this.inputElement.dispatchEvent(changeEvent);
+  }
 }
 
 customElements.define(DateRangePickerTextFieldElement.is, DateRangePickerTextFieldElement);
