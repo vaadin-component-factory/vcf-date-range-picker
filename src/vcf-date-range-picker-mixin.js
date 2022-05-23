@@ -1151,7 +1151,7 @@ export const DateRangePickerMixin = (subclass) =>
 
         break;
       case 'enter': {
-        if (this.shadowRoot.activeElement === this._inputEndElement) this._selectingStartDate=false;
+        if (this.shadowRoot.activeElement === this._inputEndElement.inputElement) this._selectingStartDate=false;
         if (this._selectingStartDate) {
           const parsedStartDate = this._getParsedDate(this._inputStartValue);
           const isValidStartDate = this._isValidDate(parsedStartDate);
@@ -1216,7 +1216,7 @@ export const DateRangePickerMixin = (subclass) =>
         }
         break;
       case 'tab':
-        if (this.shadowRoot.activeElement === this._inputStartElement)
+        if (this.shadowRoot.activeElement === this._inputStartElement.inputElement)
         {
           if (e.shiftKey) {
             this.close();
@@ -1230,7 +1230,7 @@ export const DateRangePickerMixin = (subclass) =>
             this._selectingStartDate=false;
             this._inputEndElement.focus();
           }
-        } else if (this.shadowRoot.activeElement === this._inputEndElement) {
+        } else if (this.shadowRoot.activeElement === this._inputEndElement.inputElement) {
           if (e.shiftKey) {
             const endParsedDate = this._getParsedDate(this._inputEndValue);
             if (this._isValidDate(endParsedDate)) {
