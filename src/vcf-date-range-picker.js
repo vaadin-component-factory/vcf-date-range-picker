@@ -121,6 +121,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         align-self: baseline;
         flex-grow: 1;
         width: 16ch;
+        overflow: hidden;
       }
       [focus-ring][part="end-text-field"] {
         padding-left: 2px;
