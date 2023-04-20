@@ -1241,7 +1241,6 @@ export const DateRangePickerMixin = (subclass) =>
             this._inputStartElement.focus();
           } else {
             this.close();
-            this.blur();
           }
         }
         break;
