@@ -8,6 +8,10 @@ registerStyles(
         direction: ltr;
       }
 
+      :host(.dash) {
+        pointer-events: none;
+      }
+
       :host([dir="rtl"]) [part="value"]::placeholder {
         direction: rtl;
         text-align: left;
