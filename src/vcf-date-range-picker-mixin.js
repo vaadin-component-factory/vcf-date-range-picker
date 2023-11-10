@@ -1,14 +1,20 @@
 import { IronA11yKeysBehavior } from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 import { dateAllowed, dateEquals, extractDateParts, getClosestDate } from './vcf-date-range-picker-helper.js';
 import { addListener } from '@polymer/polymer/lib/utils/gestures.js';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import { ControllerMixin } from '@vaadin/component-base/src/controller-mixin.js';
+import { MediaQueryController } from '@vaadin/component-base/src/media-query-controller.js';
+import { OverlayClassMixin } from '@vaadin/component-base/src/overlay-class-mixin.js';
+import { InputConstraintsMixin } from '@vaadin/field-base/src/input-constraints-mixin.js';
+import { VirtualKeyboardController } from '@vaadin/field-base/src/virtual-keyboard-controller.js';
+import { DelegateFocusMixin } from '@vaadin/a11y-base/src/delegate-focus-mixin.js';
+import { KeyboardMixin } from '@vaadin/a11y-base/src/keyboard-mixin.js';
 
 /**
  * @polymerMixin
  */
 export const DateRangePickerMixin = (subclass) =>
-  class VaadinDatePickerMixin extends mixinBehaviors([IronResizableBehavior], subclass) {
+  class VaadinDatePickerMixin extends OverlayClassMixin(
+    ControllerMixin(DelegateFocusMixin(InputConstraintsMixin(KeyboardMixin(subclass)))),) {
   static get properties() {
     return {
       /**
@@ -121,6 +127,7 @@ export const DateRangePickerMixin = (subclass) =>
        * @protected
        */
       _fullscreen: {
+        type: Boolean,
         value: false,
         observer: '_fullscreenChanged'
       },
@@ -358,6 +365,12 @@ export const DateRangePickerMixin = (subclass) =>
       /** @private */
       _focusOverlayOnOpen: Boolean,
 
+      /** @private */
+      _overlayContent: {
+        type: Object,
+        sync: true,
+      },
+
       /** @protected */
       _overlayInitialized: Boolean
     };
@@ -369,16 +382,78 @@ export const DateRangePickerMixin = (subclass) =>
       '_selectedStartDateChanged(_selectedStartDate, i18n.formatDate)',
       '_selectedEndDateChanged(_selectedEndDate, i18n.formatDate)',
       '_focusedDateChanged(_focusedDate, i18n.formatDate)',
-      '_announceFocusedDate(_focusedDate, opened, _ignoreAnnounce)'
+      '_announceFocusedDate(_focusedDate, opened, _ignoreAnnounce)',
+      '__updateOverlayContent(_overlayContent, i18n, label, _minDate, _maxDate, _focusedDate, showWeekNumbers, _selectedStartDate, _selectedEndDate, _selectingStartDate, hideSidePanel)',
+      '__updateOverlayContentTheme(_overlayContent, _theme)',
+      '__updateOverlayContentFullScreen(_overlayContent, _fullscreen)',
     ];
+  }
+  
+  /** @private */
+  // eslint-disable-next-line max-params
+  __updateOverlayContent(overlayContent, i18n, label, minDate, maxDate, focusedDate, showWeekNumbers, _selectedStartDate, _selectedEndDate, selectingStartDate, hideSidePanel) {
+    if (overlayContent) {
+      overlayContent.i18n = i18n;
+      overlayContent.label = label;
+      overlayContent.minDate = minDate;
+      overlayContent.maxDate = maxDate;
+      overlayContent.focusedDate = focusedDate;
+      overlayContent.showWeekNumbers = showWeekNumbers;
+      overlayContent.selectedStartDate = _selectedStartDate;
+      overlayContent.selectedEndDate = _selectedEndDate;
+      overlayContent.selectingStartDate = selectingStartDate;
+      overlayContent.hideSidePanel = hideSidePanel;
+    }
+  }
+
+  /** @private */
+  __updateOverlayContentTheme(overlayContent, theme) {
+    if (overlayContent) {
+      if (theme) {
+        overlayContent.setAttribute('theme', theme);
+      } else {
+        overlayContent.removeAttribute('theme');
+      }
+    }
+  }
+
+  /** @private */
+  __updateOverlayContentFullScreen(overlayContent, fullscreen) {
+    if (overlayContent) {
+      overlayContent.toggleAttribute('fullscreen', fullscreen);
+    }
+  }
+
+  constructor() {
+    super();
+
+    this._boundOnClick = this._onClick.bind(this)
+    this._boundOnScroll = this._onScroll.bind(this);
+    this._boundFocus = this._focus.bind(this);
+    this._boundUpdateAlignmentAndPosition = this._updateAlignmentAndPosition.bind(this);
+
+    this._boundOverlayRenderer = this._overlayRenderer.bind(this);
   }
 
   /** @protected */
   ready() {
     super.ready();
-    this._boundOnScroll = this._onScroll.bind(this);
-    this._boundFocus = this._focus.bind(this);
-    this._boundUpdateAlignmentAndPosition = this._updateAlignmentAndPosition.bind(this);
+
+    // new stuff from v24
+    this.addController(
+      new MediaQueryController(this._fullscreenMediaQuery, (matches) => {
+        this._fullscreen = matches;
+      }),
+    );
+
+    this.addController(new VirtualKeyboardController(this));
+
+    const overlay = this.$.overlay;
+    this._overlayElement = overlay;
+
+    overlay.renderer = this._boundOverlayRenderer;
+
+    // new stuff from v24
 
     const isClearButton = e => {
       const path = e.composedPath();
@@ -536,6 +611,52 @@ export const DateRangePickerMixin = (subclass) =>
     }
   }
 
+   /** @private */
+   _overlayRenderer(root) {
+    if (root.firstChild) {
+      return;
+    }
+
+    // Create and store document content element
+    const content = document.createElement('vcf-date-range-picker-overlay-content');
+    root.appendChild(content);
+
+    this._overlayContent = content;
+
+    this._initOverlay();
+
+    this._updateAlignmentAndPosition();
+
+   content.addEventListener('close', () => {
+      this._close();
+    });
+
+    content.addEventListener('focus-input', this._focusAndSelect.bind(this));
+
+    // User confirmed selected date by clicking the calendar.
+    content.addEventListener('date-tap', e => this._closeOnTap(e));
+
+    // Two-way data binding for `selectedStartDate` property
+    content.addEventListener('selected-start-date-changed', (e) => {
+      this._selectedStartDate = e.detail.value;
+    });
+
+    // Two-way data binding for `selectedEndDate` property
+    content.addEventListener('selected-end-date-changed', (e) => {
+      this._selectedEndDate = e.detail.value;
+    });
+    
+    // Two-way data binding for `selectedEndDate` property
+    content.addEventListener('selecting-start-date-changed', (e) => {
+      this._selectingStartDate = e.detail.value;
+    });
+
+    // Two-way data binding for `focusedDate` property
+    content.addEventListener('focused-date-changed', (e) => {
+      this._focusedDate = e.detail.value;
+    });
+  }
+
   /**
     * @return {HTMLElement}
     * @protected
@@ -613,14 +734,9 @@ export const DateRangePickerMixin = (subclass) =>
   /** @private */
   _openedChanged(opened) {
     this._selectingStartDate = true;
-    if (opened && !this._overlayInitialized) {
-      this._initOverlay();
-    }
-    if (this._overlayInitialized) {
-      this.$.overlay.opened = opened;
-    }
-    if (opened) {
-      this._updateAlignmentAndPosition();
+
+    if (this.inputElement) {
+      this.inputElement.setAttribute('aria-expanded', opened);
     }
   }
 
@@ -1102,6 +1218,29 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   /**
+     * @param {Event} event
+     * @private
+     */
+  _onClick(event) {
+    // Clear button click is handled in separate listener
+    // but bubbles to the host, so we need to ignore it.
+    if (!this._isClearButton(event)) {
+      this._onHostClick(event);
+    }
+  }
+
+  /**
+   * @param {Event} event
+   * @private
+   */
+  _onHostClick(event) {
+    if (!this.autoOpenDisabled || this._noInput) {
+      event.preventDefault();
+      this.open();
+    }
+  }
+
+  /**
     * Keyboard Navigation
     * @private
     */
@@ -1320,11 +1459,6 @@ export const DateRangePickerMixin = (subclass) =>
     if (opened && !_ignoreAnnounce) {
       this._overlayContent.announceFocusedDate();
     }
-  }
-
-  /** @private */
-  get _overlayContent() {
-    return this.$.overlay.content.querySelector('#overlay-content');
   }
 
   /**

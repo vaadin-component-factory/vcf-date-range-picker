@@ -1,5 +1,6 @@
-import { OverlayElement } from '@vaadin/vaadin-overlay/src/vaadin-overlay.js';
-import { DisableUpgradeMixin } from '@polymer/polymer/lib/mixins/disable-upgrade-mixin.js';
+import { Overlay } from '@vaadin/overlay/src/vaadin-overlay.js';
+import { PositionMixin } from '@vaadin/overlay/src/vaadin-overlay-position-mixin.js';
+import './vcf-date-range-picker-overlay-content.js';
 
 /**
  * The overlay element.
@@ -11,14 +12,15 @@ import { DisableUpgradeMixin } from '@polymer/polymer/lib/mixins/disable-upgrade
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  *
- * @extends Vaadin.OverlayElement
+ * @extends Vaadin.Overlay
  * @memberof Vaadin
  * @private
  */
-class DateRangePickerOverlayElement extends DisableUpgradeMixin(OverlayElement) {
+class DateRangePickerOverlayElement extends PositionMixin(Overlay) {
   static get is() {
     return 'vcf-date-range-picker-overlay';
   }
+
 }
 
 customElements.define(DateRangePickerOverlayElement.is, DateRangePickerOverlayElement);
