@@ -4,7 +4,7 @@ import '@polymer/iron-media-query/iron-media-query.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import { ControlStateMixin } from '@vaadin/vaadin-control-state-mixin/vaadin-control-state-mixin.js';
 import './vcf-date-range-picker-overlay.js';
-import './vcf-date-range-picker-overlay-content.js';
+
 import { DateRangePickerMixin } from './vcf-date-range-picker-mixin.js';
 import './vcf-date-range-picker-text-field.js';
 import { ElementMixin } from '@vaadin/component-base/src/element-mixin.js';
@@ -208,30 +208,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     <vcf-date-range-picker-overlay
         id="overlay"
         fullscreen$="[[_fullscreen]]"
+        opened="{{opened}}"
         theme$="[[__getOverlayTheme(theme, _overlayInitialized)]]"
         on-vaadin-overlay-open="_onOverlayOpened"
         on-vaadin-overlay-close="_onOverlayClosed"
         disable-upgrade>
-      <template>
-        <vcf-date-range-picker-overlay-content
-            id="overlay-content" i18n="[[i18n]]"
-            fullscreen$="[[_fullscreen]]"
-            label="[[label]]"
-            selected-start-date="{{_selectedStartDate}}"
-            selected-end-date="{{_selectedEndDate}}"
-            selecting-start-date="{{_selectingStartDate}}"
-            hide-side-panel="{{hideSidePanel}}"
-            slot="dropdown-content"
-            focused-date="{{_focusedDate}}"
-            show-week-numbers="[[showWeekNumbers]]"
-            min-date="[[_minDate]]"
-            max-date="[[_maxDate]]"
-            role="dialog"
-            on-date-tap="_closeOnTap"
-            part="overlay-content"
-            theme$="[[__getOverlayTheme(theme, _overlayInitialized)]]">
-        </vcf-date-range-picker-overlay-content>
-      </template>
+      
     </vcf-date-range-picker-overlay>
     <div style="display:none">
       <slot name="presets"></slot>
@@ -248,7 +230,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
   }
 
   static get version() {
-    return '4.4.1';
+    return '5.0.0';
   }
 
   static get properties() {
@@ -399,6 +381,15 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
     var newJson = JSON.parse(JSON.stringify(this._classNamesForDates));
     newJson[className] = dates;
     this._classNamesForDates = newJson;
+  }
+
+  // Workaround https://github.com/vaadin/web-components/issues/2855
+  /** @protected */
+  _openedChanged(opened) {
+    super._openedChanged(opened);
+
+    this.$.overlay.positionTarget = this.shadowRoot.querySelector('[part="input-field"]');
+    this.$.overlay.noVerticalOverlap = true;
   }
 
   /** @private */
