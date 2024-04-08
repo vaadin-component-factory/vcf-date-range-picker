@@ -16,6 +16,12 @@ registerStyles(
         content: var(--material-icons-clear);
       }
 
+      [part="dash"] {
+        width: 13px;
+        align-self: baseline;
+        flex-grow: 1;
+      }
+
       [part="toggle-button"]::before {
         content: var(--material-icons-calendar);
       }
