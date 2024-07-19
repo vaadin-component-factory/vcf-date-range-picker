@@ -613,7 +613,7 @@ export const DateRangePickerMixin = (subclass) =>
 
    /** @private */
    _overlayRenderer(root) {
-    if (root.firstChild) {
+    if (root.firstElementChild) {
       return;
     }
 
