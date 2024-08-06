@@ -1148,13 +1148,13 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   removePreselectionById(id) {
-    var handler = e => {
-      if (e.detail.value) {
+    var handler = () => {
+      if (this.opened) {
         this._overlayContent.removePreselectionById(id);
       }
-      this.$.overlay.removeEventListener('opened-changed',handler);
+      this.$.overlay.removeEventListener('vaadin-overlay-open',handler);
     }
-    this.$.overlay.addEventListener('opened-changed', handler);
+    this.$.overlay.addEventListener('vaadin-overlay-open', handler);
   }
 
   /** @private */
