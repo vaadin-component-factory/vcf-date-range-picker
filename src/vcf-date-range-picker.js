@@ -230,7 +230,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
   }
 
   static get version() {
-    return '5.0.1';
+    return '5.0.2';
   }
 
   static get properties() {
