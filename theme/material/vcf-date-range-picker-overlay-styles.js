@@ -19,7 +19,7 @@ registerStyles(
       }
 
       :host(:not([fullscreen])) [part="overlay"] {
-        width: 360px;
+        width: 500px;
         max-height: 500px;
         border-radius: 0 4px 4px;
       }
@@ -33,7 +33,7 @@ registerStyles(
       }
 
       :host(:not([fullscreen])[show-week-numbers]) [part="overlay"] {
-        width: 396px;
+        width: 536px;
       }
 
       [part="content"] {
