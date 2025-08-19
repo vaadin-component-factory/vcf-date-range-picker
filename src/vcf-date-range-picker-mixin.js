@@ -378,7 +378,6 @@ export const DateRangePickerMixin = (subclass) =>
 
   static get observers() {
     return [
-      '_updateHasValue(value)',
       '_selectedStartDateChanged(_selectedStartDate, i18n.formatDate)',
       '_selectedEndDateChanged(_selectedEndDate, i18n.formatDate)',
       '_focusedDateChanged(_focusedDate, i18n.formatDate)',
@@ -794,12 +793,14 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   /** @private */
-  _updateHasValue(value) {
-    if (value) {
-      this.setAttribute('has-value', '');
-    } else {
-      this.removeAttribute('has-value');
-    }
+  get _hasValue() {
+    return (this._selectedStartDate != null && this._selectedStartDate !== '') 
+    || (this._selectedEndDate != null && this._selectedEndDate !== '');
+  }
+
+  /** @private */
+  _updateHasValue(hasValue) {
+    this.toggleAttribute('has-value', hasValue);
   }
 
   /** @private */
@@ -848,6 +849,8 @@ export const DateRangePickerMixin = (subclass) =>
     }
 
     this.value = startDate + ";" + endDate;
+
+    this._updateHasValue(this._hasValue);
   }
 
   _extractStartDate(value) {
