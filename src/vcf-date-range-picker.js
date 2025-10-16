@@ -113,12 +113,12 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
       }
 
       [part="start-text-field"] {
-        align-self: baseline;
+        align-self: flex-end;
         flex-grow: 1;
         width: 11ch;
       }
       [part="end-text-field"] {
-        align-self: baseline;
+        align-self: flex-end;
         flex-grow: 1;
         width: 16ch;
         overflow: hidden;
@@ -373,7 +373,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         }
       });
     });
-    
+
     resizeObserver.observe(this);
   }
 
@@ -475,8 +475,10 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
   _setClearButtonLabel(i18nClear) {
     // FIXME(platosha): expose i18n API in <vaadin-text-field>
     // https://github.com/vaadin/vaadin-text-field/issues/348
-    this._inputStartElement.shadowRoot.querySelector('[part="clear-button"]')
-      .setAttribute('aria-label', i18nClear);
+    const clearButton = this._inputStartElement.shadowRoot.querySelector('[part="clear-button"]');
+    if (clearButton) {
+        clearButton.setAttribute('aria-label', i18nClear);
+    }
   }
 }
 
