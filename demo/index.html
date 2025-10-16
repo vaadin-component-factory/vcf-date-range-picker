@@ -4,61 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
     <title>vcf-date-range-picker demo</title>
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script type="module" src="date-range-picker-demo.js"></script>
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-        .centered {
-          max-width: 1000px;
-        }
-        main {
-          opacity: 1;
-          transition: opacity 1s;
-        }
-        main.hidden {
-          opacity: 0;
-        }
-      </style>
-    </custom-style>
-    <script>
-      window.addEventListener('WebComponentsReady', () => document.querySelector('main').classList.remove('hidden'));
-      window.addEventListener('WebComponentsReady', () => document.querySelector('#test').removePreselectionById("lastMonthButton"));
-      customElements.whenDefined('vcf-date-range-picker').then(function() {
-        const button = document.querySelector('#may2021MonthButton');
-        const dateRangePicker = document.querySelector('#test');
-        dateRangePicker.setClassNameForDates("publicHolidays", ["2021-05-01","2021-05-25"]);
-        button.addEventListener('click', function() {
-          dateRangePicker.value="2021-05-01;2021-05-31";
-          dateRangePicker.close();
-        });
-
-        const openDateRangePickerButton = document.querySelector('#openDateRangePicker');
-        const dateRangePickerWithoutTextFields = document.querySelector('#withoutTextFields');
-        const span = document.querySelector('#selectedRange');
-        dateRangePickerWithoutTextFields.addEventListener('value-changed', function(e) {
-          span.textContent = "Selected range: " + e.detail.value;
-        });
-        openDateRangePickerButton.addEventListener('click', function(e) {
-          dateRangePickerWithoutTextFields.openOnPosition(event.clientX,event.clientY);
-        });
-
-        var formLayout = document.querySelector('#formLayout');
-
-        formLayout.responsiveSteps = [
-          {minWidth: 0, columns: 1, labelsPosition: 'top'},
-          {minWidth: '10em', columns: 1},
-          {minWidth: '20em', columns: 2},
-          {minWidth: '30em', columns: 3}
-        ];
-
-      });
+      <link rel="stylesheet" href="../node_modules/@vaadin/vaadin-lumo-styles/lumo.css">
+    <script type="module">
+        import '@vaadin/button';
+        import '@polymer/iron-icon';
+        import '@vaadin/icons';
+        import '@vaadin/form-layout';
+        import '../theme/lumo/vcf-date-range-picker.js';
     </script>
   </head>
   <body>
     <main class="vertical-section-container centered hidden">
       <h3>Basic usage</h3>
-      <demo-snippet>
-        <template preserve-content>
           <vcf-date-range-picker id="test" label="Enter date range">
             <vaadin-button id="may2021MonthButton" theme="tertiary" part="preset-button" on-tap="document.querySelector('#test')" slot="presets">
               May 2021
@@ -66,37 +23,21 @@
           </vcf-date-range-picker>
           <vcf-date-range-picker placeholder="Enter start date" end-placeholder="Enter end date"></vcf-date-range-picker>
           <vcf-date-range-picker value="1990-01-28" end-value="1990-01-30"></vcf-date-range-picker>
-        </template>
-      </demo-snippet>
-  
+
       <h3>Disabled and read-only</h3>
-      <demo-snippet>
-        <template preserve-content>
           <vcf-date-range-picker disabled label="Disabled" value="1990-01-28"></vcf-date-range-picker>
           <vcf-date-range-picker readonly label="Read-only" value="1990-01-28"></vcf-date-range-picker>
-        </template>
-      </demo-snippet>
 
       <h3>Date Range Picker without visible textfields</h3>
       <p>Click the button to open the date range picker</p>
-      <demo-snippet id="auto-open-disabled" when-defined="vcf-date-range-picker">
-        <template preserve-content>
           <vcf-date-range-picker id="withoutTextFields" label="Label" auto-open-disabled hide-text-fields></vcf-date-range-picker>
           <vaadin-button id="openDateRangePicker">Open Date Range Picker</vaadin-button>
           <span id="selectedRange"></span>
-        </template>
-      </demo-snippet>
-  
+
       <h3>Clear button</h3>
-      <demo-snippet>
-        <template preserve-content>
           <vcf-date-range-picker clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
-        </template>
-      </demo-snippet>
 
       <h3>Inside Form Layout</h3>
-      <demo-snippet>
-        <template preserve-content>
           <vaadin-form-layout id="formLayout">
             <vaadin-text-field label="First Name" value="Jane"></vaadin-text-field>
             <vaadin-text-field label="Last Name" value="Smith"></vaadin-text-field>
@@ -107,22 +48,14 @@
             <vaadin-text-area label="Bio" colspan="2" value="My name is Jane."></vaadin-text-area>
             <vcf-date-range-picker colspan="2" clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
           </vaadin-form-layout>
-        </template>
-      </demo-snippet>
 
       <h3>Helper text without side panel</h3>
       <p>Use the <code>helper-text</code> attribute or add content to the <code>helper</code> slot to set helper content.</p>
-      <demo-snippet id="helper-text">
-        <template preserve-content>
           <vcf-date-range-picker hide-side-panel label="Event date">
             <span slot="helper">International date format</span>
           </vcf-date-range-picker>
-        </template>
-      </demo-snippet>
-  
+
       <h3>Value change event</h3>
-      <demo-snippet id="value-change-event" when-defined="vcf-date-range-picker">
-        <template preserve-content>
           <vcf-date-range-picker label="Label"></vcf-date-range-picker>
           <div>Selected value: <span id="output"></span></div>
           <script>
@@ -134,17 +67,40 @@
             //   });
             // });
           </script>
-        </template>
-      </demo-snippet>
-  
+
       <h3>Auto open disabled</h3>
       <p>Dropdown is only opened when clicking the toggle button or pressing Up or Down arrow keys.</p>
-      <demo-snippet id="auto-open-disabled" when-defined="vcf-date-range-picker">
-        <template preserve-content>
           <vcf-date-range-picker label="Label" auto-open-disabled></vcf-date-range-picker>
-        </template>
-      </demo-snippet>
 
     </main>
+
+    <script type="module">
+        const button = document.querySelector('#may2021MonthButton');
+        const dateRangePicker = document.querySelector('#test');
+        dateRangePicker.setClassNameForDates("publicHolidays", ["2021-05-01","2021-05-25"]);
+        button.addEventListener('click', function() {
+            dateRangePicker.value="2021-05-01;2021-05-31";
+            dateRangePicker.close();
+        });
+
+        const openDateRangePickerButton = document.querySelector('#openDateRangePicker');
+        const dateRangePickerWithoutTextFields = document.querySelector('#withoutTextFields');
+        const span = document.querySelector('#selectedRange');
+        dateRangePickerWithoutTextFields.addEventListener('value-changed', function(e) {
+            span.textContent = "Selected range: " + e.detail.value;
+        });
+        openDateRangePickerButton.addEventListener('click', function(e) {
+            dateRangePickerWithoutTextFields.openOnPosition(event.clientX,event.clientY);
+        });
+
+        var formLayout = document.querySelector('#formLayout');
+
+        formLayout.responsiveSteps = [
+            {minWidth: 0, columns: 1, labelsPosition: 'top'},
+            {minWidth: '10em', columns: 1},
+            {minWidth: '20em', columns: 2},
+            {minWidth: '30em', columns: 3}
+        ];
+    </script>
   </body>
 </html>

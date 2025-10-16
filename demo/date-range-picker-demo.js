@@ -4,4 +4,4 @@ import '@vaadin/button';
 import '@polymer/iron-icon';
 import '@vaadin/icons';
 import '@vaadin/form-layout';
-import '../theme/lumo/vcf-date-range-picker.js';
+import '../src/vcf-date-range-picker.js';

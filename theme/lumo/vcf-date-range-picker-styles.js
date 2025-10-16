@@ -1,5 +1,4 @@
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
-import '@vaadin/vaadin-lumo-styles/font-icons.js';
 import '@vaadin/vaadin-lumo-styles/mixins/field-button.js';
 
 registerStyles(
@@ -11,7 +10,7 @@ registerStyles(
 
       [part="dash"] {
         display: inline-flex;
-        align-self: baseline;
+        align-self: flex-end;
         width: 26px;
       }
 

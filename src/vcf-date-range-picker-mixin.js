@@ -1,13 +1,13 @@
 import { IronA11yKeysBehavior } from '@polymer/iron-a11y-keys-behavior/iron-a11y-keys-behavior.js';
 import { dateAllowed, dateEquals, extractDateParts, getClosestDate } from './vcf-date-range-picker-helper.js';
 import { addListener } from '@polymer/polymer/lib/utils/gestures.js';
-import { ControllerMixin } from '@vaadin/component-base/src/controller-mixin.js';
 import { MediaQueryController } from '@vaadin/component-base/src/media-query-controller.js';
 import { OverlayClassMixin } from '@vaadin/component-base/src/overlay-class-mixin.js';
 import { InputConstraintsMixin } from '@vaadin/field-base/src/input-constraints-mixin.js';
 import { VirtualKeyboardController } from '@vaadin/field-base/src/virtual-keyboard-controller.js';
 import { DelegateFocusMixin } from '@vaadin/a11y-base/src/delegate-focus-mixin.js';
 import { KeyboardMixin } from '@vaadin/a11y-base/src/keyboard-mixin.js';
+import { ControllerMixin } from './controller-mixin.js';
 
 /**
  * @polymerMixin
@@ -36,7 +36,7 @@ export const DateRangePickerMixin = (subclass) =>
       },
 
       /**
-       * True if currently selecting the 
+       * True if currently selecting the
        * StartDate, false if selecting EndDate
        * @type {Boolean | undefined}
        * @protected
@@ -387,7 +387,7 @@ export const DateRangePickerMixin = (subclass) =>
       '__updateOverlayContentFullScreen(_overlayContent, _fullscreen)',
     ];
   }
-  
+
   /** @private */
   // eslint-disable-next-line max-params
   __updateOverlayContent(overlayContent, i18n, label, minDate, maxDate, focusedDate, showWeekNumbers, _selectedStartDate, _selectedEndDate, selectingStartDate, hideSidePanel) {
@@ -644,7 +644,7 @@ export const DateRangePickerMixin = (subclass) =>
     content.addEventListener('selected-end-date-changed', (e) => {
       this._selectedEndDate = e.detail.value;
     });
-    
+
     // Two-way data binding for `selectedEndDate` property
     content.addEventListener('selecting-start-date-changed', (e) => {
       this._selectingStartDate = e.detail.value;
@@ -794,7 +794,7 @@ export const DateRangePickerMixin = (subclass) =>
 
   /** @private */
   get _hasValue() {
-    return (this._selectedStartDate != null && this._selectedStartDate !== '') 
+    return (this._selectedStartDate != null && this._selectedStartDate !== '')
     || (this._selectedEndDate != null && this._selectedEndDate !== '');
   }
 
@@ -811,12 +811,12 @@ export const DateRangePickerMixin = (subclass) =>
   }
 
   /** @private */
-  _handleDateChange(property, value, oldValue) {	
+  _handleDateChange(property, value, oldValue) {
     if (!value) {
       this[property] = '';
       return;
     }
-	
+
     var date = this._parseDate(value);
     if (!date) {
       return false;
@@ -974,7 +974,7 @@ export const DateRangePickerMixin = (subclass) =>
     if (this._noInput && this.focusElement) {
       this.focusElement.blur();
     }
-    
+
     var slot = this.shadowRoot.querySelector("slot[name='presets']");
 		var nodes = slot.assignedNodes();
     this._overlayContent.addToolbarContent(nodes);
