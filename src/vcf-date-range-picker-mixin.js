@@ -455,12 +455,7 @@ export const DateRangePickerMixin = (subclass) =>
     // new stuff from v24
 
     const isClearButton = e => {
-      const path = e.composedPath();
-      // FIX: Just using inputStartElement, but don't know what to do
-      const inputIndex = path.indexOf(this._inputStartElement);
-      return path.slice(0, inputIndex)
-        .filter(el => el.getAttribute && el.getAttribute('part') === 'clear-button')
-        .length === 1;
+      return e.composedPath()[0].id === "clearButton";
     };
 
     addListener(this, 'tap', e => {
