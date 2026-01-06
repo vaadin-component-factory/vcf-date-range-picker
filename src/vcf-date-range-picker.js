@@ -137,6 +137,7 @@ import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
         display:flex; 
         min-width:100%; 
         max-width:100%; 
+        line-height: normal;
       }
       [part="end-text-field"] [part="toggle-button"] {
         position: absolute;
