@@ -4,7 +4,42 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
     <title>vcf-date-range-picker demo</title>
-      <link rel="stylesheet" href="../node_modules/@vaadin/vaadin-lumo-styles/lumo.css">
+    <link rel="stylesheet" href="/node_modules/@vaadin/vaadin-lumo-styles/lumo.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+      }
+      .centered {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      main {
+        opacity: 1;
+        transition: opacity 1s;
+      }
+      main.hidden {
+        opacity: 0;
+      }
+      h3 {
+        padding: 10px;        
+        background-color: #f4f5f6;
+        margin-bottom: 8px;
+      }
+      h3 :first-of-type {
+        margin-top: 10px;
+      }
+      vcf-date-range-picker,
+      vaadin-form-layout,
+      vaadin-button {
+        margin-bottom: 25px;
+      }
+      main > p {
+        padding: 0 15px 10px 0;
+        margin: 0;
+      }
+    </style>
     <script type="module">
         import '@vaadin/button';
         import '@polymer/iron-icon';
@@ -14,7 +49,7 @@
     </script>
   </head>
   <body>
-    <main class="vertical-section-container centered hidden">
+    <main class="centered hidden">
       <h3>Basic usage</h3>
           <vcf-date-range-picker id="test" label="Enter date range">
             <vaadin-button id="may2021MonthButton" theme="tertiary" part="preset-button" on-tap="document.querySelector('#test')" slot="presets">
@@ -24,19 +59,23 @@
           <vcf-date-range-picker placeholder="Enter start date" end-placeholder="Enter end date"></vcf-date-range-picker>
           <vcf-date-range-picker value="1990-01-28" end-value="1990-01-30"></vcf-date-range-picker>
 
+      <hr>    
       <h3>Disabled and read-only</h3>
           <vcf-date-range-picker disabled label="Disabled" value="1990-01-28"></vcf-date-range-picker>
           <vcf-date-range-picker readonly label="Read-only" value="1990-01-28"></vcf-date-range-picker>
 
+      <hr>
       <h3>Date Range Picker without visible textfields</h3>
       <p>Click the button to open the date range picker</p>
           <vcf-date-range-picker id="withoutTextFields" label="Label" auto-open-disabled hide-text-fields></vcf-date-range-picker>
           <vaadin-button id="openDateRangePicker">Open Date Range Picker</vaadin-button>
           <span id="selectedRange"></span>
-
+      
+      <hr>
       <h3>Clear button</h3>
           <vcf-date-range-picker clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
 
+      <hr>
       <h3>Inside Form Layout</h3>
           <vaadin-form-layout id="formLayout">
             <vaadin-text-field label="First Name" value="Jane"></vaadin-text-field>
@@ -49,12 +88,14 @@
             <vcf-date-range-picker colspan="2" clear-button-visible label="Super long super long super long super long super long super long super long super long super  label" value="1990-01-28" error-message="Super long super long super long super long super long super long super long super long super error "></vcf-date-range-picker>
           </vaadin-form-layout>
 
+      <hr>
       <h3>Helper text without side panel</h3>
       <p>Use the <code>helper-text</code> attribute or add content to the <code>helper</code> slot to set helper content.</p>
           <vcf-date-range-picker hide-side-panel label="Event date">
             <span slot="helper">International date format</span>
           </vcf-date-range-picker>
 
+      <hr>
       <h3>Value change event</h3>
           <vcf-date-range-picker label="Label"></vcf-date-range-picker>
           <div>Selected value: <span id="output"></span></div>
@@ -68,13 +109,17 @@
             // });
           </script>
 
+      <hr>
       <h3>Auto open disabled</h3>
       <p>Dropdown is only opened when clicking the toggle button or pressing Up or Down arrow keys.</p>
-          <vcf-date-range-picker label="Label" auto-open-disabled></vcf-date-range-picker>
+        <vcf-date-range-picker label="Label" auto-open-disabled></vcf-date-range-picker>
 
     </main>
 
     <script type="module">
+        // Remove hidden class on page load to show main content
+        document.querySelector('main').classList.remove('hidden');
+        
         const button = document.querySelector('#may2021MonthButton');
         const dateRangePicker = document.querySelector('#test');
         dateRangePicker.setClassNameForDates("publicHolidays", ["2021-05-01","2021-05-25"]);
