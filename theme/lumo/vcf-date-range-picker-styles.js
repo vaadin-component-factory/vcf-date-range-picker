@@ -9,12 +9,10 @@ registerStyles(
       }
 
       [part="dash"] {
-        display: inline-flex;
+        display: inline-block;
         align-self: flex-end;
         width: 26px;
       }
-
-
 
       [part="toggle-button"]::before {
         content: var(--lumo-icons-calendar);

@@ -30,9 +30,7 @@ registerStyles(
       [part="value"] {
         --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 0.25em);
       }
-      :host(.dash) {
-        pointer-events: none;
-      }
+      
       :host(.dash) [part="input-field"] {
         border-radius: 0;
       }
