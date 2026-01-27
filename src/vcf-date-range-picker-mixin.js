@@ -514,7 +514,7 @@ export const DateRangePickerMixin = (subclass) =>
     this.$.overlay.addEventListener('vaadin-overlay-escape-press', this._boundFocus);
 
     // Keep focus attribute in focusElement for styling
-    this._overlayContent.addEventListener('focus', () => this.focusElement._setFocused(true));
+    this._overlayContent.addEventListener('focus', () => this._onFocusElement());
 
     this._overlayContent.setClassNameForDates(this._classNamesForDates);
 
@@ -530,6 +530,12 @@ export const DateRangePickerMixin = (subclass) =>
 
     this.addEventListener('mousedown', bringToFrontListener);
     this.addEventListener('touchstart', bringToFrontListener);
+  }
+
+  _onFocusElement() {
+    if (this.focusElement && this.focusElement._setFocused) {
+      this.focusElement._setFocused(true)
+    } 
   }
 
   /** @protected */
