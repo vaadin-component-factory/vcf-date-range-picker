@@ -3,7 +3,7 @@ import '@vaadin/vaadin-material-styles/color.js';
 import '@vaadin/vaadin-material-styles/typography.js';
 
 registerStyles(
-  'vaadin-month-calendar',
+  'vcf-date-range-month-calendar',
   css`
       :host {
         color: var(--material-body-text-color);
